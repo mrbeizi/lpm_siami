@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('dashboard');
+
+Route::resource('user-role', 'LPM\UserRoleController');
