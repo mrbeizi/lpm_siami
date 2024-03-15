@@ -24,4 +24,5 @@ Route::get('/home', 'HomeController@index')->name('dashboard');
 Route::group(['middleware' => 'auth'], function(){
     Route::resource('user-role', 'LPM\UserRoleController');
     Route::resource('data-user', 'UserController');
+    Route::resource('data-auditee', 'LPM\AuditeeController');
 });

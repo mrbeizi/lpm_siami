@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','Data User')
+@section('title','Data Auditee')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('data-user.index')}}">@yield('title')</a>
+        <a href="{{route('data-auditee.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -31,13 +31,13 @@
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_user">
+                            <table class="table table-hover table-responsive" id="table_auditee">
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Name</th>
-                                  <th>Email</th>
-                                  <th>Role</th>
+                                  <th>Fakultas</th>
+                                  <th>Prodi</th>
+                                  <th>Auditee</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -56,33 +56,40 @@
                                 <div class="modal-body">
                                     <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                         <div class="row">
+
+                                            <div class="mb-3">
+                                                <label for="id_periode" class="form-label">Periode</label>
+                                                <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_periode">- Choose -</option>
+                                                    <option value="1">2024</option>
+                                                </select>
+                                                <span class="text-danger" id="periodeErrorMsg"></span>
+                                            </div>
                                             
                                             <div class="mb-3">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input type="text" class="form-control" id="username" name="username" value="" placeholder="e.g John Doe" autofocus />
-                                                <span class="text-danger" id="usernameErrorMsg" style="font-size: 10px;"></span>
+                                                <label for="fakultas" class="form-label">Fakultas</label>
+                                                <input type="text" class="form-control" id="fakultas" name="fakultas" value="" placeholder="e.g Bisnis" autofocus />
+                                                <span class="text-danger" id="fakultasErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" value="" placeholder="e.g johndoe@email.com" />
-                                                <span class="text-danger" id="emailErrorMsg"></span>
+                                                <label for="prodi" class="form-label">Prodi</label>
+                                                <input type="text" class="form-control" id="prodi" name="prodi" value="" placeholder="e.g Manajemen" />
+                                                <span class="text-danger" id="prodiErrorMsg"></span>
                                             </div>
-
                                             <div class="mb-3">
-                                                <label for="password" class="form-label">Password</label>
-                                                <input type="password" class="form-control" id="password" name="password" value="" />
-                                                <span class="text-danger" id="passwordErrorMsg"></span>
+                                                <label for="dekan" class="form-label">Dekan</label>
+                                                <input type="text" class="form-control" id="dekan" name="dekan" value="" />
+                                                <span class="text-danger" id="dekanErrorMsg"></span>
                                             </div>
-
                                             <div class="mb-3">
-                                                <label for="role_id" class="form-label">Role</label>
-                                                <select class="form-select" id="role_id" name="role_id" aria-label="Default select example" style="cursor:pointer;">
-                                                    <option value="" id="choose_role">- Choose -</option>
-                                                    @foreach($getRole as $role)
-                                                    <option value="{{$role->id}}">{{$role->role_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                <span class="text-danger" id="roleIDErrorMsg"></span>
+                                                <label for="sekretaris_dekan" class="form-label">Sekretaris Dekan</label>
+                                                <input type="text" class="form-control" id="sekretaris_dekan" name="sekretaris_dekan" value="" />
+                                                <span class="text-danger" id="sekretarisDekanErrorMsg"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="ko_prodi" class="form-label">Koordinator Prodi</label>
+                                                <input type="text" class="form-control" id="ko_prodi" name="ko_prodi" value=""/>
+                                                <span class="text-danger" id="koProdiErrorMsg"></span>
                                             </div>
                                             
                                             <div class="col-sm-offset-2 col-sm-12">
@@ -123,19 +130,19 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_user').DataTable({
+        var table = $('#table_auditee').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('data-user.index') }}",
+            ajax: "{{ route('data-auditee.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'name',name: 'name'},
-                {data: 'email',name: 'email'},
-                {data: 'role_name',name: 'role_name'},
+                {data: 'fakultas',name: 'fakultas'},
+                {data: 'prodi',name: 'prodi'},
+                {data: 'dekan',name: 'dekan'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -159,14 +166,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('data-user.store') }}",
+                    url: "{{ route('data-auditee.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        $('#table_user').DataTable().ajax.reload(null, true);
+                        $('#table_auditee').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',
@@ -179,7 +186,12 @@
                         })
                     },
                     error: function(response) {
-                        $('#roleNameErrorMsg').text(response.responseJSON.errors.role_name);
+                        $('#periodeErrorMsg').text(response.responseJSON.errors.id_periode);
+                        $('#fakultasErrorMsg').text(response.responseJSON.errors.fakultas);
+                        $('#prodiErrorMsg').text(response.responseJSON.errors.prodi);
+                        $('#dekanErrorMsg').text(response.responseJSON.errors.dekan);
+                        $('#sekretarisDekanErrorMsg').text(response.responseJSON.errors.sekretaris_dekan);
+                        $('#koProdiErrorMsg').text(response.responseJSON.errors.ko_prodi);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -200,16 +212,18 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        $.get('data-user/' + data_id + '/edit', function (data) {
+        $.get('data-auditee/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
               
             $('#id').val(data.id);
-            $('#username').val(data.name);
-            $('#email').val(data.email);
-            $('#password').val(data.password);
-            $('#role_id').val(data.role_id);
+            $('#id_periode').val(data.id_periode);
+            $('#fakultas').val(data.fakultas);
+            $('#prodi').val(data.prodi);
+            $('#dekan').val(data.dekan);
+            $('#sekretaris_dekan').val(data.sekretaris_dekan);
+            $('#ko_prodi').val(data.ko_prodi);
         })
     });
 
@@ -228,7 +242,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: "data-user/" + dataId,
+                        url: "data-auditee/" + dataId,
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'
@@ -239,7 +253,7 @@
                             type: 'success',
                             timer: 2000
                         })
-                        $('#table_user').DataTable().ajax.reload(null, true);
+                        $('#table_auditee').DataTable().ajax.reload(null, true);
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',
@@ -253,7 +267,7 @@
         });
     });
 
-    $('#choose_role').attr('disabled', 'disabled');
+    $('#choose_periode').attr('disabled', 'disabled');
 
 </script>
 

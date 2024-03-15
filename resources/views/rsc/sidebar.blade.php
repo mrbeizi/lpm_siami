@@ -140,7 +140,7 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{{route('data-auditee.index')}}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-group bx-tada-hover"></i>
         <div data-i18n="Daftar Auditee">Daftar Auditee</div>
         </a>
