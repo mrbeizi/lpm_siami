@@ -25,4 +25,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('user-role', 'LPM\UserRoleController');
     Route::resource('data-user', 'UserController');
     Route::resource('data-auditee', 'LPM\AuditeeController');
+    Route::resource('data-faculty', 'General\FacultyController');
+    Route::resource('data-employee', 'General\EmployeeController');
+    Route::resource('data-department', 'General\DepartmentController');
+
+    Route::post('list-prodi','LPM\AuditeeController@prodi')->name('list-prodi');
 });

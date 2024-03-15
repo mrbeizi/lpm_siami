@@ -5,12 +5,17 @@ namespace App\Http\Controllers\LPM;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lpm\Auditee;
+use App\Models\General\Faculty;
+use App\Models\General\Department;
 
 class AuditeeController extends Controller
 {
     public function index(Request $request)
     {
-        $datas = Auditee::all();
+        $datas = Auditee::leftJoin('faculties','faculties.id','=','auditees.id_faculty')
+            ->leftJoin('departments','departments.id','=','auditees.id_department')
+            ->select('auditees.id AS id','auditees.dekan','auditees.sekretaris_dekan','auditees.ko_prodi','faculties.faculty_name','departments.department_name')
+            ->get();
 
         if($request->ajax()){
             return datatables()->of($datas)
@@ -24,22 +29,23 @@ class AuditeeController extends Controller
             ->addIndexColumn(true)
             ->make(true);
         }
-        return view('lpm.auditee.index');
+        $getFaculty = Faculty::select('faculties.id','faculties.faculty_name')->get();
+        return view('lpm.auditee.index', compact('getFaculty'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'id_periode' => 'required',
-            'fakultas' => 'required',
-            'prodi' => 'required',
+            'id_faculty' => 'required',
+            'id_department' => 'required',
             'dekan' => 'required',
             'sekretaris_dekan' => 'required',
             'ko_prodi' => 'required',
         ],[
             'id_periode.required' => 'Anda belum memilih periode',
-            'fakultas.required' => 'Anda belum menginputkan nama fakultas',
-            'prodi.required' => 'Anda belum menginputkan nama prodi',
+            'id_faculty.required' => 'Anda belum menginputkan nama fakultas',
+            'id_department.required' => 'Anda belum menginputkan nama prodi',
             'dekan.required' => 'Anda belum menginputkan nama dekan',
             'dekan.required' => 'Anda belum menginputkan nama dekan',
             'sekretaris_dekan.required' => 'Anda belum menginputkan nama sekretaris dekan',
@@ -48,8 +54,8 @@ class AuditeeController extends Controller
 
         $post = Auditee::updateOrCreate(['id' => $request->id],
                 [
-                    'fakultas'          => $request->fakultas,
-                    'prodi'          => $request->prodi,
+                    'id_faculty'          => $request->id_faculty,
+                    'id_department'    => $request->id_department,
                     'dekan'          => $request->dekan,
                     'sekretaris_dekan'  => $request->sekretaris_dekan,
                     'ko_prodi'          => $request->ko_prodi,
@@ -71,5 +77,12 @@ class AuditeeController extends Controller
     {
         $post = Auditee::where('id',$id)->delete();     
         return response()->json($post);
+    }
+
+    public function prodi(Request $request)
+    {
+        $data['department'] = Department::where("id_faculty", $request->id_faculty)->get(["department_name","id"]);
+        return response()->json($data);
+
     }
 }

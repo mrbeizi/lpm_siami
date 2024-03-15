@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','User Role')
+@section('title','Data Depatment')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('user-role.index')}}">@yield('title')</a>
+        <a href="{{route('data-department.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -31,11 +31,12 @@
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_user_role">
+                            <table class="table table-hover table-responsive table-sm" id="table_faculty">
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Role Name</th>
+                                  <th>Department</th>
+                                  <th>Faculty of</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -56,9 +57,29 @@
                                         <div class="row">
                                             <input type="hidden" id="id" name="id">
                                             <div class="mb-3">
-                                                <label for="role_name" class="form-label">Role Name*</label>
-                                                <input type="text" class="form-control" id="role_name" name="role_name" value="" placeholder="Administrator" />
-                                                <span class="text-danger" id="roleNameErrorMsg" style="font-size: 10px;"></span>
+                                                <label for="department_name" class="form-label">Department Name</label>
+                                                <input type="text" class="form-control" id="department_name" name="department_name" value="" placeholder="e.g Manajemen" autofocus />
+                                                <span class="text-danger" id="departmentNameErrorMsg" style="font-size: 10px;"></span>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="id_faculty" class="form-label">Faculty of</label>
+                                                <select class="form-select" id="id_faculty" name="id_faculty" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_faculty">- Choose -</option>
+                                                    @foreach($getFaculty as $faculty)
+                                                    <option value="{{$faculty->id}}">{{$faculty->faculty_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger" id="idFacultyErrorMsg" style="font-size: 10px;"></span>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="id_periode" class="form-label">Period</label>
+                                                <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_periode">- Choose -</option>
+                                                    <option value="1">2024</option>
+                                                </select>
+                                                <span class="text-danger" id="idPeriodeErrorMsg"></span>
                                             </div>
                                             
                                             <div class="col-sm-offset-2 col-sm-12">
@@ -99,17 +120,18 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_user_role').DataTable({
+        var table = $('#table_faculty').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('user-role.index') }}",
+            ajax: "{{ route('data-department.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'role_name',name: 'role_name'},
+                {data: 'department_name',name: 'department_name'},
+                {data: 'faculty_name',name: 'faculty_name'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -133,14 +155,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('user-role.store') }}",
+                    url: "{{ route('data-department.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        $('#table_user_role').DataTable().ajax.reload(null, true);
+                        $('#table_faculty').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',
@@ -153,7 +175,9 @@
                         })
                     },
                     error: function(response) {
-                        $('#roleNameErrorMsg').text(response.responseJSON.errors.role_name);
+                        $('#departmentNameErrorMsg').text(response.responseJSON.errors.department_name);
+                        $('#idFacultyErrorMsg').text(response.responseJSON.errors.id_faculty);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -174,13 +198,15 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        $.get('user-role/' + data_id + '/edit', function (data) {
+        $.get('data-department/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
               
             $('#id').val(data.id);
-            $('#role_name').val(data.role_name);
+            $('#department_name').val(data.department_name);
+            $('#id_faculty').val(data.id_faculty);
+            $('#id_periode').val(data.id_periode);
         })
     });
 
@@ -199,7 +225,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: "user-role/" + dataId,
+                        url: "data-department/" + dataId,
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'
@@ -210,7 +236,7 @@
                             type: 'success',
                             timer: 2000
                         })
-                        $('#table_user_role').DataTable().ajax.reload(null, true);
+                        $('#table_faculty').DataTable().ajax.reload(null, true);
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',
@@ -223,6 +249,9 @@
             },
         });
     });
+
+    $('#choose_faculty').attr('disabled', 'disabled');
+    $('#choose_periode').attr('disabled', 'disabled');
 
 </script>
 

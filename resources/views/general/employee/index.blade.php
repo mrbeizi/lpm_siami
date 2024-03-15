@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('title','User Role')
+@section('title','Data Employee')
 
 @section('breadcrumbs')
 <div class="container">
@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('user-role.index')}}">@yield('title')</a>
+        <a href="{{route('data-employee.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -31,11 +31,13 @@
                         </div>
                         
                         <!-- AKHIR TOMBOL -->
-                            <table class="table table-hover table-responsive" id="table_user_role">
+                            <table class="table table-hover table-responsive" id="table_employee">
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Role Name</th>
+                                  <th>Name</th>
+                                  <th>NIP</th>
+                                  <th>NIDN</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -56,9 +58,29 @@
                                         <div class="row">
                                             <input type="hidden" id="id" name="id">
                                             <div class="mb-3">
-                                                <label for="role_name" class="form-label">Role Name*</label>
-                                                <input type="text" class="form-control" id="role_name" name="role_name" value="" placeholder="Administrator" />
-                                                <span class="text-danger" id="roleNameErrorMsg" style="font-size: 10px;"></span>
+                                                <label for="nip" class="form-label">NIP</label>
+                                                <input type="text" class="form-control" id="nip" name="nip" value="" placeholder="Type NIP" />
+                                                <span class="text-danger" id="nipErrorMsg" style="font-size: 10px;"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="nidn" class="form-label">NIDN</label>
+                                                <input type="text" class="form-control" id="nidn" name="nidn" value="" placeholder="Type NIDN" />
+                                                <span class="text-danger" id="nidnErrorMsg" style="font-size: 10px;"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="name" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="name" name="name" value="" placeholder="Type Name" />
+                                                <span class="text-danger" id="nameErrorMsg" style="font-size: 10px;"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" value="" placeholder="Type Email" />
+                                                <span class="text-danger" id="nidnErrorMsg" style="font-size: 10px;"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="phone_number" class="form-label">Phone Number</label>
+                                                <input type="text" class="form-control" id="phone_number" name="phone_number" value="" placeholder="Type Phone Number" />
+                                                <span class="text-danger" id="phoneNumberErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             
                                             <div class="col-sm-offset-2 col-sm-12">
@@ -99,17 +121,19 @@
 
     // DATATABLE
     $(document).ready(function () {
-        var table = $('#table_user_role').DataTable({
+        var table = $('#table_employee').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "{{ route('user-role.index') }}",
+            ajax: "{{ route('data-employee.index') }}",
             columns: [
                 {data: null,sortable:false,
                     render: function (data, type, row, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'role_name',name: 'role_name'},
+                {data: 'name',name: 'name'},
+                {data: 'nip',name: 'nip'},
+                {data: 'nidn',name: 'nidn'},
                 {data: 'action',name: 'action'},
             ]
         });
@@ -133,14 +157,14 @@
 
                 $.ajax({
                     data: $('#form-tambah-edit').serialize(), 
-                    url: "{{ route('user-role.store') }}",
+                    url: "{{ route('data-employee.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function (data) {
                         $('#form-tambah-edit').trigger("reset");
                         $('#tambah-edit-modal').modal('hide');
                         $('#tombol-simpan').html('Save');
-                        $('#table_user_role').DataTable().ajax.reload(null, true);
+                        $('#table_employee').DataTable().ajax.reload(null, true);
                         Swal.fire({
                             title: 'Good job!',
                             text: 'Data saved successfully!',
@@ -153,7 +177,11 @@
                         })
                     },
                     error: function(response) {
-                        $('#roleNameErrorMsg').text(response.responseJSON.errors.role_name);
+                        $('#nipErrorMsg').text(response.responseJSON.errors.nip);
+                        $('#nidnErrorMsg').text(response.responseJSON.errors.nidn);
+                        $('#nameErrorMsg').text(response.responseJSON.errors.name);
+                        $('#emailErrorMsg').text(response.responseJSON.errors.email);
+                        $('#phoneNumberErrorMsg').text(response.responseJSON.errors.phone_number);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
@@ -174,13 +202,17 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        $.get('user-role/' + data_id + '/edit', function (data) {
+        $.get('data-employee/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
               
             $('#id').val(data.id);
-            $('#role_name').val(data.role_name);
+            $('#name').val(data.name);
+            $('#nip').val(data.nip);
+            $('#nidn').val(data.nidn);
+            $('#email').val(data.email);
+            $('#phone_number').val(data.phone_number);
         })
     });
 
@@ -199,7 +231,7 @@
             preConfirm: function() {
                 return new Promise(function(resolve) {
                     $.ajax({
-                        url: "user-role/" + dataId,
+                        url: "data-employee/" + dataId,
                         type: 'DELETE',
                         data: {id:dataId},
                         dataType: 'json'
@@ -210,7 +242,7 @@
                             type: 'success',
                             timer: 2000
                         })
-                        $('#table_user_role').DataTable().ajax.reload(null, true);
+                        $('#table_employee').DataTable().ajax.reload(null, true);
                     }).fail(function() {
                         Swal.fire({
                             title: 'Oops!',
@@ -223,6 +255,8 @@
             },
         });
     });
+
+    $('#choose_role').attr('disabled', 'disabled');
 
 </script>
 

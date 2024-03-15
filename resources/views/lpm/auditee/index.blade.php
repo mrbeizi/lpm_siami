@@ -56,7 +56,7 @@
                                 <div class="modal-body">
                                     <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                         <div class="row">
-
+                                            <input type="hidden" id="id" name="id">
                                             <div class="mb-3">
                                                 <label for="id_periode" class="form-label">Periode</label>
                                                 <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
@@ -67,14 +67,21 @@
                                             </div>
                                             
                                             <div class="mb-3">
-                                                <label for="fakultas" class="form-label">Fakultas</label>
-                                                <input type="text" class="form-control" id="fakultas" name="fakultas" value="" placeholder="e.g Bisnis" autofocus />
-                                                <span class="text-danger" id="fakultasErrorMsg" style="font-size: 10px;"></span>
+                                                <label for="id_faculty" class="form-label">Fakultas</label>
+                                                <select class="form-select" id="id_faculty" name="id_faculty" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_faculty">- Choose -</option>
+                                                    @foreach($getFaculty as $faculty)
+                                                    <option value="{{$faculty->id}}">{{$faculty->faculty_name}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span class="text-danger" id="idFacultyErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="prodi" class="form-label">Prodi</label>
-                                                <input type="text" class="form-control" id="prodi" name="prodi" value="" placeholder="e.g Manajemen" />
-                                                <span class="text-danger" id="prodiErrorMsg"></span>
+                                                <label for="id_department" class="form-label">Prodi</label>
+                                                <select class="select2 form-control" id="id_department" name="id_department" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_prodi" class="d-none">- Choose -</option>
+                                                </select>
+                                                <span class="text-danger" id="idDepartmentErrorMsg"></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="dekan" class="form-label">Dekan</label>
@@ -140,8 +147,8 @@
                     return meta.row + meta.settings._iDisplayStart + 1;
                     }
                 }, 
-                {data: 'fakultas',name: 'fakultas'},
-                {data: 'prodi',name: 'prodi'},
+                {data: 'faculty_name',name: 'faculty_name'},
+                {data: 'department_name',name: 'department_name'},
                 {data: 'dekan',name: 'dekan'},
                 {data: 'action',name: 'action'},
             ]
@@ -187,8 +194,8 @@
                     },
                     error: function(response) {
                         $('#periodeErrorMsg').text(response.responseJSON.errors.id_periode);
-                        $('#fakultasErrorMsg').text(response.responseJSON.errors.fakultas);
-                        $('#prodiErrorMsg').text(response.responseJSON.errors.prodi);
+                        $('#idFacultyErrorMsg').text(response.responseJSON.errors.id_faculty);
+                        $('#idDepartmentErrorMsg').text(response.responseJSON.errors.id_department);
                         $('#dekanErrorMsg').text(response.responseJSON.errors.dekan);
                         $('#sekretarisDekanErrorMsg').text(response.responseJSON.errors.sekretaris_dekan);
                         $('#koProdiErrorMsg').text(response.responseJSON.errors.ko_prodi);
@@ -219,8 +226,8 @@
               
             $('#id').val(data.id);
             $('#id_periode').val(data.id_periode);
-            $('#fakultas').val(data.fakultas);
-            $('#prodi').val(data.prodi);
+            $('#id_faculty').val(data.id_faculty);
+            $('#id_department').val(data.id_department);
             $('#dekan').val(data.dekan);
             $('#sekretaris_dekan').val(data.sekretaris_dekan);
             $('#ko_prodi').val(data.ko_prodi);
@@ -268,6 +275,29 @@
     });
 
     $('#choose_periode').attr('disabled', 'disabled');
+    $('#choose_faculty').attr('disabled', 'disabled');
+    $('#choose_prodi').attr('disabled', 'disabled');
+
+    $('select[name="id_faculty"]').on('change', function() {
+        $('#id_department').empty();
+        var fakultasID = $(this).val();
+        $.ajax({
+            url: "{{route('list-prodi')}}",
+            type: "POST",
+            data: {
+                id_faculty: fakultasID,
+                _token: '{{csrf_token()}}'
+            },
+            dataType: 'json',
+            success: function (data) {
+                $('select[name="id_department"]').removeClass('d-none');
+                $.each(data.department, function(key, value) {
+                $('select[name="id_department"]').append('<option value="'+ value.id +'">'+ value.department_name +'</option>');                
+                });
+            }
+        });
+    });
+
 
 </script>
 
