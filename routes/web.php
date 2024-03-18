@@ -32,4 +32,5 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('list-prodi','LPM\AuditeeController@prodi')->name('list-prodi');
 
     Route::resource('data-auditor', 'Auditors\AuditorController');
+    Route::resource('data-announcement', 'General\AnnouncementController');
 });

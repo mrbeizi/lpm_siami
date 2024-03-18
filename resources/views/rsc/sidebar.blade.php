@@ -122,13 +122,13 @@
     </li>
     
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-announcement.index')}}">
         <i class='menu-icon tf-icons bx bx-news bx-tada-hover'></i>
         <div data-i18n="Informasi">Informasi</div>
         </a>
         <ul class="menu-sub">
             <li class="menu-item">
-                <a href="#" class="menu-link ">
+                <a href="{{route('data-announcement.index')}}" class="menu-link {{set_active('data-announcement.index')}}">
                 <div data-i18n="Pengumuman">Pengumuman</div>
                 </a>
             </li> 
