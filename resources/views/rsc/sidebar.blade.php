@@ -156,43 +156,7 @@
         <i class="menu-icon tf-icons bx bx-folder-open bx-tada-hover"></i>
         <div data-i18n="Dokumen SPMI">Dokumen SPMI</div>
         </a>
-    </li>
-
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
-    <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-faculty.index')}} OR {{set_active('data-department.index')}} OR {{set_active('data-user.index')}} OR {{set_active('user-role.index')}}">
-        <i class='menu-icon tf-icons bx bx-data bx-tada-hover'></i>
-        <div data-i18n="Database Settings">Database Settings</div>
-        </a>
-        <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="{{route('data-employee.index')}}" class="menu-link {{set_active('data-employee.index')}}">
-            <div data-i18n="Employee">Employee</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('data-faculty.index')}}" class="menu-link {{set_active('data-faculty.index')}}">
-            <div data-i18n="Faculty">Faculty</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('data-department.index')}}" class="menu-link {{set_active('data-department.index')}}">
-            <div data-i18n="Department">Department</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('data-user.index')}}" class="menu-link {{set_active('data-user.index')}}">
-            <div data-i18n="User List">User List</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{route('user-role.index')}}" class="menu-link {{set_active('user-role.index')}}">
-            <div data-i18n="Setting Role">Setting Role</div>
-            </a>
-        </li>
-        </ul>
-    </li>
-    
+    </li>    
     </ul>
 
 </aside>
