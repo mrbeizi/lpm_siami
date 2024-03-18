@@ -47,7 +47,6 @@ class AuditeeController extends Controller
             'id_faculty.required' => 'Anda belum menginputkan nama fakultas',
             'id_department.required' => 'Anda belum menginputkan nama prodi',
             'dekan.required' => 'Anda belum menginputkan nama dekan',
-            'dekan.required' => 'Anda belum menginputkan nama dekan',
             'sekretaris_dekan.required' => 'Anda belum menginputkan nama sekretaris dekan',
             'ko_prodi.required' => 'Anda belum menginputkan nama koprodi',
         ]);
