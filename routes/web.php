@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('data-faculty', 'General\FacultyController');
     Route::resource('data-employee', 'General\EmployeeController');
     Route::resource('data-department', 'General\DepartmentController');
-
+    
     Route::post('list-prodi','LPM\AuditeeController@prodi')->name('list-prodi');
+
+    Route::resource('data-auditor', 'Auditors\AuditorController');
 });

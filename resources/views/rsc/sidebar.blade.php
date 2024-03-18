@@ -146,7 +146,7 @@
         </a>
     </li>
     <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{{route('data-auditor.index')}}" class="menu-link {{set_active('data-auditor.index')}}">
         <i class="menu-icon tf-icons bx bx-body bx-tada-hover"></i>
         <div data-i18n="Daftar Auditor">Daftar Auditor</div>
         </a>
