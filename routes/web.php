@@ -33,4 +33,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('data-auditor', 'Auditors\AuditorController');
     Route::resource('data-announcement', 'General\AnnouncementController');
+    Route::resource('data-news', 'General\NewsController');
+    Route::resource('data-period', 'General\PeriodController');
+    Route::post('switch-period','General\PeriodController@switchPeriode')->name('change-period-status');
 });
