@@ -68,14 +68,14 @@
                                                         <div class="mb-3">
                                                             <label for="publish_date" class="form-label">Publish date</label>
                                                             <input type="date" class="form-control" id="publish_date" name="publish_date" value="" placeholder="mm/dd/yyyy" />
-                                                            <span class="text-danger" id="publishDateErrorMsg"></span>
+                                                            <span class="text-danger" id="publishDateErrorMsg" style="font-size: 10px;"></span>
                                                         </div>                                                        
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="mb-3">
                                                             <label for="end_date" class="form-label">End date</label>
                                                             <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" />
-                                                            <span class="text-danger" id="endDateErrorMsg"></span>
+                                                            <span class="text-danger" id="endDateErrorMsg" style="font-size: 10px;"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -83,7 +83,7 @@
                                             <div class="mb-3">
                                                 <label for="content" class="form-label">Content</label>
                                                 <textarea class="form-control" id="content" name="content" value="" rows="6"/></textarea>
-                                                <span class="text-danger" id="contentErrorMsg"></span>
+                                                <span class="text-danger" id="contentErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label>Attachment</label>
@@ -102,7 +102,7 @@
                                                             <option value="" id="choose_periode">- Choose -</option>
                                                             <option value="1">2024</option>
                                                         </select>
-                                                        <span class="text-danger" id="periodeErrorMsg"></span>
+                                                        <span class="text-danger" id="periodeErrorMsg" style="font-size: 10px;"></span>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <label>Role:</label>

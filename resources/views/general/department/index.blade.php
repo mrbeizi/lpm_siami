@@ -79,7 +79,7 @@
                                                     <option value="" id="choose_periode">- Choose -</option>
                                                     <option value="1">2024</option>
                                                 </select>
-                                                <span class="text-danger" id="idPeriodeErrorMsg"></span>
+                                                <span class="text-danger" id="idPeriodeErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             
                                             <div class="col-sm-offset-2 col-sm-12">

@@ -65,13 +65,13 @@
                                             <div class="mb-3">
                                                 <label for="email" class="form-label">Email</label>
                                                 <input type="email" class="form-control" id="email" name="email" value="" placeholder="e.g johndoe@email.com" />
-                                                <span class="text-danger" id="emailErrorMsg"></span>
+                                                <span class="text-danger" id="emailErrorMsg style="font-size: 10px;"></span>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label for="password" class="form-label">Password</label>
                                                 <input type="password" class="form-control" id="password" name="password" value="" />
-                                                <span class="text-danger" id="passwordErrorMsg"></span>
+                                                <span class="text-danger" id="passwordErrorMsg" style="font-size: 10px;"></span>
                                             </div>
 
                                             <div class="mb-3">
@@ -82,7 +82,7 @@
                                                     <option value="{{$role->id}}">{{$role->role_name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <span class="text-danger" id="roleIDErrorMsg"></span>
+                                                <span class="text-danger" id="roleIDErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             
                                             <div class="col-sm-offset-2 col-sm-12">

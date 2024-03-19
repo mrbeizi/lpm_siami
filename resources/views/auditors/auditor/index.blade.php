@@ -95,7 +95,7 @@
                                                 <select class="select2 form-control" id="id_department" name="id_department" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="" id="choose_prodi" class="d-none">- Choose -</option>
                                                 </select>
-                                                <span class="text-danger" id="idDepartmentErrorMsg"></span>
+                                                <span class="text-danger" id="idDepartmentErrorMsg" style="font-size: 10px;"></span>
                                             </div>
 
                                             <div class="mb-3">

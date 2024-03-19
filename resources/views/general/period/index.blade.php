@@ -66,13 +66,13 @@
                                             <div class="mb-3">
                                                 <label for="start_date" class="form-label">Starts date</label>
                                                 <input type="date" class="form-control" id="start_date" name="start_date" value="" placeholder="mm/dd/yyyy" />
-                                                <span class="text-danger" id="startDateErrorMsg"></span>
+                                                <span class="text-danger" id="startDateErrorMsg" style="font-size: 10px;"></span>
                                             </div> 
 
                                             <div class="mb-3">
                                                 <label for="end_date" class="form-label">Ends date</label>
                                                 <input type="date" class="form-control" id="end_date" name="end_date" value="" placeholder="mm/dd/yyyy" />
-                                                <span class="text-danger" id="endDateErrorMsg"></span>
+                                                <span class="text-danger" id="endDateErrorMsg" style="font-size: 10px;"></span>
                                             </div> 
 
                                             <div class="mb-3">
