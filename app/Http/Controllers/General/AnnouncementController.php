@@ -20,7 +20,7 @@ class AnnouncementController extends Controller
         if($request->ajax()){
             return datatables()->of($datas)
             ->addColumn('action', function($data){
-                $button = '<a href="'.asset('dokumen-uploads/'.$data->id.'/announcement/'.$data->id.'/'.$data->attachment.'').'" target="_blank" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Open document" data-original-title="Open" class="view btn btn-primary btn-xs"><i class="bx bx-xs bx-show"></i></a>';
+                $button = '<a href="'.asset('dokumen-uploads/announcement/'.$data->attachment.'').'" target="_blank" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Open document" data-original-title="Open" class="view btn btn-primary btn-xs"><i class="bx bx-xs bx-show"></i></a>';
                 $button .= '&nbsp;&nbsp;';
                 $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
                 $button .= '&nbsp;&nbsp;';
@@ -55,13 +55,13 @@ class AnnouncementController extends Controller
 
         if($files = $request->file('file')) {
             $berkas = $files->getClientOriginalName();
-            $path = public_path().'/dokumen-uploads/'.$request->id.'/announcement/'.$request->id;
+            $path = public_path().'/dokumen-uploads/'.$request->id.'/announcement/';
 
-            if(File::exists($path)){
-                $remove = Announcement::where([['id','=',$request->id]])->first();
-                File::deleteDirectory($path);
-                Announcement::where([['id','=',$request->id]])->delete();
-            } 
+            // if(File::exists($path)){
+            //     $remove = Announcement::where([['id','=',$request->id]])->first();
+            //     File::deleteDirectory($path);
+            //     Announcement::where([['id','=',$request->id]])->delete();
+            // } 
             if(empty($errors)==true){
                 if(!File::isDirectory($path)){
                     Storage::makeDirectory($path);
@@ -69,7 +69,7 @@ class AnnouncementController extends Controller
                 if(File::isDirectory("$path/".$berkas)==false){
                     $files->move("$path/",$berkas);
                 } else { 
-                    return Redirect::back()->with('error', 'Terjadi Kesalahan');
+                    return Redirect::back()->with('error', 'Something wrong!');
                 }
             }else{
                 print_r($errors);

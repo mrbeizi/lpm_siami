@@ -34,13 +34,13 @@
     <!-- Apps & Pages -->
     <li class="menu-header small text-uppercase"><span class="menu-header-text">Main Menus</span></li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-period.index')}}">
         <i class='menu-icon tf-icons bx bx-file-blank bx-tada-hover'></i>
         <div data-i18n="Perencanaan AMI">Perencanaan AMI</div>
         </a>
         <ul class="menu-sub">
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{route('data-period.index')}}" class="menu-link {{set_active('data-period.index')}}">
             <div data-i18n="Periode AMI">Periode AMI</div>
             </a>
         </li>
@@ -122,7 +122,7 @@
     </li>
     
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-announcement.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-announcement.index')}} OR {{set_active('data-news.index')}}">
         <i class='menu-icon tf-icons bx bx-news bx-tada-hover'></i>
         <div data-i18n="Informasi">Informasi</div>
         </a>
@@ -133,7 +133,7 @@
                 </a>
             </li> 
             <li class="menu-item">
-                <a href="#" class="menu-link ">
+                <a href="{{route('data-news.index')}}" class="menu-link {{set_active('data-news.index')}}">
                 <div data-i18n="Berita">Berita</div>
                 </a>
             </li>      
