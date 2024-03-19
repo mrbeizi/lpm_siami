@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\General\Announcement;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $datas = Announcement::select('id','title','publish_date','attachment','created_at')->orderBy('id','DESC')->get();
+        return view('dashboard', compact('datas'));
     }
 }

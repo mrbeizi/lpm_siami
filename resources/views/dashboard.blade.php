@@ -138,196 +138,6 @@
         </div>
         <!--/ Referral, conversion, impression & income charts -->
 
-        <!-- Activity -->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-4">
-            <div class="card">
-            <div class="card-header">
-                <h5 class="card-title mb-0">Activity</h5>
-            </div>
-            <div class="card-body">
-                <ul class="p-0 m-0">
-                <li class="d-flex mb-4 pb-2">
-                    <div class="avatar avatar-sm flex-shrink-0 me-3">
-                    <span class="avatar-initial rounded-circle bg-label-primary"><i class='bx bx-cube'></i></span>
-                    </div>
-                    <div class="d-flex flex-column w-100">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span>Total Sales</span>
-                        <span class="text-muted">$2,459</span>
-                    </div>
-                    <div class="progress" style="height:6px;">
-                        <div class="progress-bar bg-primary" style="width: 40%" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    </div>
-                </li>
-                <li class="d-flex mb-4 pb-2">
-                    <div class="avatar avatar-sm flex-shrink-0 me-3">
-                    <span class="avatar-initial rounded-circle bg-label-success"><i class='bx bx-dollar'></i></span>
-                    </div>
-                    <div class="d-flex flex-column w-100">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span>Income</span>
-                        <span class="text-muted">$8,478</span>
-                    </div>
-                    <div class="progress" style="height:6px;">
-                        <div class="progress-bar bg-success" style="width: 80%" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    </div>
-                </li>
-                <li class="d-flex mb-4 pb-2">
-                    <div class="avatar avatar-sm flex-shrink-0 me-3">
-                    <span class="avatar-initial rounded-circle bg-label-warning"><i class='bx bx-trending-up'></i></span>
-                    </div>
-                    <div class="d-flex flex-column w-100">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span>Budget</span>
-                        <span class="text-muted">$12,490</span>
-                    </div>
-                    <div class="progress" style="height:6px;">
-                        <div class="progress-bar bg-warning" style="width: 80%" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    </div>
-                </li>
-                <li class="d-flex mb-2">
-                    <div class="avatar avatar-sm flex-shrink-0 me-3">
-                    <span class="avatar-initial rounded-circle bg-label-danger"><i class='bx bx-check'></i></span>
-                    </div>
-                    <div class="d-flex flex-column w-100">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span>Tasks</span>
-                        <span class="text-muted">$184</span>
-                    </div>
-                    <div class="progress" style="height:6px;">
-                        <div class="progress-bar bg-danger" style="width: 25%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    </div>
-                </li>
-                </ul>
-            </div>
-            </div>
-        </div>
-        <!--/ Activity -->
-
-        <!-- Profit Report & Registration -->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3">
-            <div class="row">
-            <div class="col-12 col-sm-6 col-md-12 mb-4">
-                <div class="card h-100">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Profit Report</h5>
-                </div>
-                <div class="card-body d-flex align-items-end justify-content-between">
-                    <div class="d-flex justify-content-between align-items-center gap-3 w-100">
-                    <div class="d-flex align-content-center">
-                        <div class="chart-report" data-color="danger" data-series="25"></div>
-                        <div class="chart-info">
-                        <h5 class="mb-0">$12k</h5>
-                        <small class="text-muted">2020</small>
-                        </div>
-                    </div>
-                    <div class="d-flex align-content-center">
-                        <div class="chart-report" data-color="info" data-series="50"></div>
-                        <div class="chart-info">
-                        <h5 class="mb-0">$64k</h5>
-                        <small class="text-muted">2021</small>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-md-12 mb-4">
-                <div class="card">
-                <div class="card-header pb-2">
-                    <h5 class="card-title mb-0">Registration</h5>
-                </div>
-                <div class="card-body pb-2">
-                    <div class="d-flex justify-content-between align-items-end gap-3">
-                    <div class="mb-3">
-                        <div class="d-flex align-content-center">
-                        <h5 class="mb-1">58.4k</h5>
-                        <i class="bx bx-chevron-up text-success"></i>
-                        </div>
-                        <small class="text-success">12.8%</small>
-                    </div>
-                    <div id="registrationsBarChart"></div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-        <!--/ Profit Report & Registration -->
-
-        <!-- Sales -->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-4">
-            <div class="card">
-            <div class="card-header d-flex align-items-start justify-content-between">
-                <div class="card-title mb-0">
-                <h5 class="m-0 me-2">Sales</h5>
-                <small class="card-subtitle text-muted">Calculated in last 7 days</small>
-                </div>
-                <div class="dropdown">
-                <button class="btn p-0" type="button" id="salesReport" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesReport">
-                    <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div id="salesChart"></div>
-                <ul class="p-0 m-0">
-                <li class="d-flex mb-3">
-                    <span class="text-primary me-2"><i class='bx bx-up-arrow-alt bx-sm'></i></span>
-                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                    <div class="me-2">
-                        <h6 class="mb-0 lh-1">Best Selling</h6>
-                        <small class="text-muted">Saturday</small>
-                    </div>
-                    <div class="item-progress">28.6k</div>
-                    </div>
-                </li>
-                <li class="d-flex">
-                    <span class="text-secondary me-2"><i class='bx bx-down-arrow-alt bx-sm'></i></span>
-                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                    <div class="me-2">
-                        <h6 class="mb-0 lh-1">Lowest Selling</h6>
-                        <small class="text-muted">Thursday</small>
-                    </div>
-                    <div class="item-progress">7.9k</div>
-                    </div>
-                </li>
-                </ul>
-            </div>
-            </div>
-        </div>
-        <!--/ Sales -->
-
-        <!-- Growth Chart-->
-        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-4">
-            <div class="card">
-            <div class="card-body text-center">
-                <div class="dropdown mb-4">
-                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButtonSec" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    2020
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButtonSec">
-                    <a class="dropdown-item" href="javascript:void(0);">2022</a>
-                    <a class="dropdown-item" href="javascript:void(0);">2021</a>
-                    <a class="dropdown-item" href="javascript:void(0);">2020</a>
-                </div>
-                </div>
-                <div id="growthRadialChart"></div>
-                <h6 class="mb-0 mt-5"> 62% Growth in 2022</h6>
-            </div>
-            </div>
-        </div>
-        <!-- Growth Chart-->
-
         <!-- Finance Summary -->
         <div class="col-md-7 col-lg-7 mb-4 mb-md-0">
             <div class="card h-100">
@@ -411,86 +221,49 @@
         <div class="col-md-5 col-lg-5 mb-0">
             <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
-                <h5 class="card-title m-0 me-2">Activity Timeline</h5>
-                <div class="dropdown">
-                <button class="btn p-0" type="button" id="timelineWapper" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="bx bx-dots-vertical-rounded"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="timelineWapper">
-                    <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                    <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                </div>
-                </div>
+                <h5 class="card-title m-0 me-2">Pengumuman</h5>
             </div>
             <div class="card-body">
                 <!-- Activity Timeline -->
                 <ul class="timeline">
+                @if($datas->count() > 0)
+                @foreach($datas as $announce)
                 <li class="timeline-item timeline-item-transparent ps-4">
                     <span class="timeline-point timeline-point-primary"></span>
                     <div class="timeline-event pb-2">
                     <div class="timeline-header mb-1">
-                        <h6 class="mb-0">12 Invoices have been paid</h6>
-                        <small class="text-muted">12 min ago</small>
+                        <h6 class="mb-0">{{$announce->title}}</h6>
+                        <small class="text-muted">{{ Carbon\Carbon::parse($announce->created_at)->diffForHumans() }}</small>
                     </div>
-                    <p class="mb-2">Invoices have been paid to the company</p>
+                    <p class="mb-2">created at {{tanggal_indonesia($announce->publish_date)}}</p>
                     <div class="d-flex">
-                        <a href="javascript:void(0)" class="me-3">
+                        <a href="{{asset('dokumen-uploads/announcement/'.$announce->attachment.'')}}" target="_blank"  class="me-3">
                         <img src="{{asset('assets/img/icons/misc/pdf.png')}}" alt="PDF image" width="23" class="me-2">
-                        <span class="fw-bold text-body">Invoices.pdf</span>
+                        <span class="fw-bold text-body">{{$announce->attachment}}</span>
                         </a>
                     </div>
                     </div>
                 </li>
+                
+                <li class="timeline-end-indicator">
+                    <i class="bx bx-check-circle"></i>
+                </li>
+                @endforeach
+                @else
                 <li class="timeline-item timeline-item-transparent ps-4">
-                    <span class="timeline-point timeline-point-warning"></span>
+                    <span class="timeline-point timeline-point-primary"></span>
                     <div class="timeline-event pb-2">
                     <div class="timeline-header mb-1">
-                        <h6 class="mb-0">Client Meeting</h6>
-                        <small class="text-muted">45 min ago</small>
+                        <h6 class="mb-0">There's no announcement</h6>
+                        <small class="text-muted"></small>
                     </div>
-                    <p class="mb-2">Project meeting with john @10:15am</p>
-                    <div class="d-flex flex-wrap">
-                        <div class="avatar me-3">
-                        <img src="{{asset('assets/img/avatars/1.png')}}" alt="Avatar" class="rounded-circle" />
-                        </div>
-                        <div>
-                        <h6 class="mb-0">John Doe (Client)</h6>
-                        <span class="text-muted">CEO of Pixinvent</span>
-                        </div>
-                    </div>
-                    </div>
-                </li>
-                <li class="timeline-item timeline-item-transparent ps-4">
-                    <span class="timeline-point timeline-point-info"></span>
-                    <div class="timeline-event pb-0">
-                    <div class="timeline-header mb-1">
-                        <h6 class="mb-0">Create a new project for client</h6>
-                        <small class="text-muted">2 Day Ago</small>
-                    </div>
-                    <p class="mb-2">5 team members in a project</p>
-                    <div class="d-flex align-items-center avatar-group">
-                        <div class="avatar avatar-sm pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Vinnie Mostowy">
-                        <img src="{{asset('assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                        </div>
-                        <div class="avatar avatar-sm pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Marrie Patty">
-                        <img src="{{asset('assets/img/avatars/12.png')}}" alt="Avatar" class="rounded-circle">
-                        </div>
-                        <div class="avatar avatar-sm pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Jimmy Jackson">
-                        <img src="{{asset('assets/img/avatars/9.png')}}" alt="Avatar" class="rounded-circle">
-                        </div>
-                        <div class="avatar avatar-sm pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Kristine Gill">
-                        <img src="{{asset('assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                        </div>
-                        <div class="avatar avatar-sm pull-up" data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Nelson Wilson">
-                        <img src="{{asset('assets/img/avatars/14.png')}}" alt="Avatar" class="rounded-circle">
-                        </div>
-                    </div>
+                    <p class="mb-0">Tidak ada pengumuman.</p>
                     </div>
                 </li>
                 <li class="timeline-end-indicator">
                     <i class="bx bx-check-circle"></i>
                 </li>
+                @endif
                 </ul>
                 <!-- /Activity Timeline -->
             </div>

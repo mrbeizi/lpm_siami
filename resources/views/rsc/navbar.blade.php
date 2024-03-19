@@ -78,11 +78,11 @@
                 <div class="row row-bordered overflow-visible g-0">
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
-                    <i class="bx bx-user-check fs-4"></i>
+                    <i class="bx bx-help-circle fs-4"></i>
                     </span>
-                    <a href="#" class="stretched-link">Profile</a>
-                    <small class="text-muted mb-0">User Profile</small>
-                </div>
+                    <a href="{{route('data-period.index')}}" class="stretched-link">Period</a>
+                    <small class="text-muted mb-0">Setting Period</small>
+                </div>                
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                     <i class="bx bx-key fs-4"></i>
@@ -92,13 +92,13 @@
                 </div>
                 </div>
                 <div class="row row-bordered overflow-visible g-0">
-                <div class="dropdown-shortcuts-item col">
-                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
-                    <i class="bx bx-help-circle fs-4"></i>
-                    </span>
-                    <a href="pages-help-center-landing.html" class="stretched-link">Help Center</a>
-                    <small class="text-muted mb-0">FAQs & Articles</small>
-                </div>
+                    <div class="dropdown-shortcuts-item col">
+                        <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-user-check fs-4"></i>
+                        </span>
+                        <a href="#" class="stretched-link">Profile</a>
+                        <small class="text-muted mb-0">User Profile</small>
+                    </div>
                 <div class="dropdown-shortcuts-item col">
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                     <i class="bx bx-window-open fs-4"></i>
