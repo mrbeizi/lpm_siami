@@ -5,6 +5,7 @@ namespace App\Http\Controllers\General;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\General\Period;
+use Carbon\Carbon;
 
 class PeriodController extends Controller
 {
@@ -25,8 +26,11 @@ class PeriodController extends Controller
                 <label class="switch switch-primary" for="'.$data->id.'">
                 <input type="checkbox" class="switch-input" onclick="PeriodeStatus('.$data->id.','.$data->is_active.')" name="period-status" id="'.$data->id.'" '.(($data->is_active=='1')?'checked':"").'>
                 <span class="switch-toggle-slider"><span class="switch-on"><i class="bx bx-check"></i></span><span class="switch-off"><i class="bx bx-x"></i></span></span></label></div>';
+            })->addColumn('interval', function($data){
+                $interval = Carbon::parse($data->start_date)->diffInDays(Carbon::parse($data->end_date));
+                return $interval;
             })
-            ->rawColumns(['action','state'])
+            ->rawColumns(['action','state','interval'])
             ->addIndexColumn(true)
             ->make(true);
         }

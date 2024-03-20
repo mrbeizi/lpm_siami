@@ -36,7 +36,7 @@
                                 <tr>
                                   <th>#</th>
                                   <th>Title</th>
-                                  <th>Starts Date</th>
+                                  <th>Schedule</th>
                                   <th>State</th>
                                   <th>Actions</th>
                                 </tr>
@@ -131,7 +131,11 @@
                     }
                 }, 
                 {data: 'title',name: 'title'},
-                {data: 'start_date',name: 'start_date'},
+                {data: 'start_date',name: 'start_date',
+                        render: function (data, type, row) {
+                            return moment(row.start_date).format("LL")+' - '+ moment(row.end_date).format("LL")+' ('+row.interval+' days)'
+                        }
+                },
                 {data: 'state',name: 'state'},
                 {data: 'action',name: 'action'},
             ]
