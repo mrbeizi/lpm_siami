@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\General\Announcement;
+use App\Models\General\News;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $datas = Announcement::select('id','title','publish_date','attachment','created_at')->orderBy('id','DESC')->get();
-        return view('dashboard', compact('datas'));
+        $getAnnouncement = Announcement::select('id','title','publish_date','attachment','updated_at')->orderBy('id','DESC')->get();
+        $getNews = News::select('id','title','publish_date','attachment','updated_at')->orderBy('id','DESC')->get();
+        return view('dashboard', compact('getAnnouncement','getNews'));
     }
 }
