@@ -49,4 +49,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/add-std/{id}','General\StandardController@manageStandard')->name('setting.std');
     Route::get('index-standard-1','General\StandardController@indexStandard')->name('index.standard-1');
     Route::delete('delete-standard-1','General\StandardController@deleteStandard')->name('delete.standard-1');
+
+    Route::resource('data-schedule','LPM\ScheduleController');
+    Route::post('send-id-auditee','LPM\ScheduleController@getIdAuditee')->name('send-id-auditee');
 });
