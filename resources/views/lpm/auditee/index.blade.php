@@ -59,16 +59,22 @@
                                             <input type="hidden" id="id" name="id">
                                             <div class="mb-3">
                                                 <label for="id_periode" class="form-label">Periode</label>
-                                                <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
+                                                <select class="select2 form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="" id="choose_periode">- Choose -</option>
-                                                    <option value="1">2024</option>
+                                                    @foreach($getPeriod as $period)
+                                                    @if($period->is_active == 1)
+                                                    <option value="{{$period->id}}" selected>{{$period->title}} (Active)</option>
+                                                    @else
+                                                    <option value="{{$period->id}}">{{$period->title}}</option>
+                                                    @endif
+                                                    @endforeach
                                                 </select>
                                                 <span class="text-danger" id="periodeErrorMsg"></span>
                                             </div>
                                             
                                             <div class="mb-3">
                                                 <label for="id_faculty" class="form-label">Fakultas</label>
-                                                <select class="form-select" id="id_faculty" name="id_faculty" aria-label="Default select example" style="cursor:pointer;">
+                                                <select class="select2 form-select" id="id_faculty" name="id_faculty" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="">- Choose -</option>
                                                     @foreach($getFaculty as $faculty)
                                                     <option value="{{$faculty->id}}">{{$faculty->faculty_name}}</option>
@@ -85,17 +91,32 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="dekan" class="form-label">Dekan</label>
-                                                <input type="text" class="form-control" id="dekan" name="dekan" value="" />
+                                                <select class="select2 form-control" id="dekan" name="dekan" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_prodi" class="d-none">- Choose -</option>
+                                                    @foreach($getEmployee as $employee)
+                                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="text-danger" id="dekanErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="sekretaris_dekan" class="form-label">Sekretaris Dekan</label>
-                                                <input type="text" class="form-control" id="sekretaris_dekan" name="sekretaris_dekan" value="" />
+                                                <select class="select2 form-control" id="sekretaris_dekan" name="sekretaris_dekan" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_prodi" class="d-none">- Choose -</option>
+                                                    @foreach($getEmployee as $employee)
+                                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="text-danger" id="sekretarisDekanErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="ko_prodi" class="form-label">Koordinator Prodi</label>
-                                                <input type="text" class="form-control" id="ko_prodi" name="ko_prodi" value=""/>
+                                                <select class="select2 form-control" id="ko_prodi" name="ko_prodi" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_prodi" class="d-none">- Choose -</option>
+                                                    @foreach($getEmployee as $employee)
+                                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="text-danger" id="koProdiErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             
@@ -149,7 +170,11 @@
                 }, 
                 {data: 'faculty_name',name: 'faculty_name'},
                 {data: 'department_name',name: 'department_name'},
-                {data: 'dekan',name: 'dekan'},
+                {data: 'dekan',name: 'dekan',
+                    render: function (type, data, row) {
+                        return row.dekan + '<br>' + row.sekretaris_dekan+ '<br>' +row.ko_prodi
+                    }
+                },
                 {data: 'action',name: 'action'},
             ]
         });

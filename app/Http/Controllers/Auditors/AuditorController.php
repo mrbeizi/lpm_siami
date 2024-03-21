@@ -8,6 +8,7 @@ use App\Models\Auditors\Auditor;
 use App\Models\General\Faculty;
 use App\Models\General\Department;
 use App\Models\General\Employee;
+use App\Models\General\Period;
 use Illuminate\Support\Facades\Storage;
 use File;
 use Redirect;
@@ -18,7 +19,8 @@ class AuditorController extends Controller
     {
         $datas = Auditor::leftJoin('faculties','faculties.id','=','auditors.id_faculty')
             ->leftJoin('departments','departments.id','=','auditors.id_department')
-            ->select('auditors.id AS id','auditors.nidn','auditors.auditor_name','auditors.sk_sertifikat_auditor','faculties.faculty_name','departments.department_name')
+            ->leftJoin('employees','employees.id','=','auditors.auditor_name')
+            ->select('auditors.id AS id','auditors.nidn','employees.name AS auditor_name','auditors.sk_sertifikat_auditor','faculties.faculty_name','departments.department_name')
             ->get();
 
         if($request->ajax()){
@@ -37,7 +39,8 @@ class AuditorController extends Controller
         }
         $getFaculty = Faculty::select('faculties.id','faculties.faculty_name')->get();
         $getEmployee = Employee::select('employees.id','employees.name')->get();
-        return view('auditors.auditor.index', compact('getFaculty','getEmployee'));
+        $getPeriod = Period::select('title','id','is_active')->get();
+        return view('auditors.auditor.index', compact('getFaculty','getEmployee','getPeriod'));
     }
 
     public function prodi(Request $request)
@@ -51,14 +54,12 @@ class AuditorController extends Controller
     {
         $request->validate([
             'id_periode' => 'required',
-            'nidn' => 'required',
             'auditor_name' => 'required',
             'id_faculty' => 'required',
             'id_department' => 'required',
             'file' => 'mimes:pdf|max:2000',
         ],[
             'id_periode.required' => 'Anda belum memilih periode',
-            'nidn.required' => 'Anda belum menginputkan NIDN',
             'auditor_name.required' => 'Anda belum menginputkan nama auditor',
             'id_faculty.required' => 'Anda belum menginputkan nama fakultas',
             'id_department.required' => 'Anda belum menginputkan nama prodi',
@@ -90,10 +91,20 @@ class AuditorController extends Controller
            
         }
 
+        # to check if any nip or nidn
+        $checkNIP = Employee::select('nidn')->where('id',$request->auditor_name)->get();
+        if($checkNIP->count() > 0){
+            foreach($checkNIP as $d){
+                $nidn = $d->nidn;
+            }
+        } else {
+            $nidn = '';
+        }
+
         $post = Auditor::updateOrCreate(['id' => $request->id],
                 [
                     'id_periode'          => $request->id_periode,
-                    'nidn'          => $request->nidn,
+                    'nidn'          => $nidn,
                     'auditor_name'  => $request->auditor_name,
                     'id_faculty'          => $request->id_faculty,
                     'id_department'    => $request->id_department,

@@ -61,22 +61,33 @@
                                             <input type="hidden" id="id" name="id">
                                             <div class="mb-3">
                                                 <label for="id_periode" class="form-label">Periode</label>
-                                                <select class="form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
+                                                <select class="select2 form-select" id="id_periode" name="id_periode" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="" id="choose_periode">- Choose -</option>
-                                                    <option value="1">2024</option>
+                                                    @foreach($getPeriod as $period)
+                                                    @if($period->is_active == 1)
+                                                    <option value="{{$period->id}}" selected>{{$period->title}} (Active)</option>
+                                                    @else
+                                                    <option value="{{$period->id}}">{{$period->title}}</option>
+                                                    @endif
+                                                    @endforeach
                                                 </select>
                                                 <span class="text-danger" id="periodeErrorMsg"></span>
                                             </div>
 
-                                            <div class="mb-3">
+                                            {{-- <div class="mb-3">
                                                 <label for="nidn" class="form-label">NIDN</label>
                                                 <input type="text" class="form-control" id="nidn" name="nidn" value="" />
                                                 <span class="text-danger" id="nidnErrorMsg"></span>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="mb-3">
                                                 <label for="auditor_name" class="form-label">Nama Auditor</label>
-                                                <input type="text" class="form-control" id="auditor_name" name="auditor_name" value="" />
+                                                <select class="select2 form-control" id="auditor_name" name="auditor_name" aria-label="Default select example" style="cursor:pointer;">
+                                                    <option value="" id="choose_auditor">- Choose -</option>
+                                                    @foreach($getEmployee as $employee)
+                                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                    @endforeach
+                                                </select>
                                                 <span class="text-danger" id="auditorNameErrorMsg"></span>
                                             </div>
                                             

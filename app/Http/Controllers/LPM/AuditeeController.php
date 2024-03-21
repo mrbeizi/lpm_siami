@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Lpm\Auditee;
 use App\Models\General\Faculty;
 use App\Models\General\Department;
+use App\Models\General\Period;
+use App\Models\General\Employee;
 
 class AuditeeController extends Controller
 {
@@ -14,7 +16,10 @@ class AuditeeController extends Controller
     {
         $datas = Auditee::leftJoin('faculties','faculties.id','=','auditees.id_faculty')
             ->leftJoin('departments','departments.id','=','auditees.id_department')
-            ->select('auditees.id AS id','auditees.dekan','auditees.sekretaris_dekan','auditees.ko_prodi','faculties.faculty_name','departments.department_name')
+            ->leftJoin('employees AS d','d.id','=','auditees.dekan')
+            ->leftJoin('employees AS sd','sd.id','=','auditees.sekretaris_dekan')
+            ->leftJoin('employees AS ko','ko.id','=','auditees.ko_prodi')
+            ->select('auditees.id AS id','faculties.faculty_name','departments.department_name','d.name AS dekan','sd.name AS sekretaris_dekan','ko.name AS ko_prodi')
             ->get();
 
         if($request->ajax()){
@@ -30,7 +35,9 @@ class AuditeeController extends Controller
             ->make(true);
         }
         $getFaculty = Faculty::select('faculties.id','faculties.faculty_name')->get();
-        return view('lpm.auditee.index', compact('getFaculty'));
+        $getPeriod = Period::select('title','id','is_active')->get();
+        $getEmployee = Employee::select('id','name')->get();
+        return view('lpm.auditee.index', compact('getFaculty','getPeriod','getEmployee'));
     }
 
     public function store(Request $request)
