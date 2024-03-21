@@ -28,22 +28,27 @@
 
                         <div class="row p-3">
                             <div class="col-md-6">
-                                <h4>Standard List</h4>
-                              <ul id="tree1">
-                                  @foreach($standards as $standard)
-                                      <li>
-                                          {{ $standard->name }}
-                                          @if(count($standard->childs))
-                                              @include('general.standard.manageChild',['childs' => $standard->childs])
-                                          @endif
-                                      </li>
-                                  @endforeach
-                              </ul>
+                                <h4 class="text-warning">Standard List</h4>
+                                @if($standards->count() > 0)
+                                <ul id="tree1">
+                                    @foreach($standards as $standard)
+                                        <li>
+                                            {{ $standard->name }}
+                                            @if(count($standard->childs))
+                                                @include('general.standard.manageChild',['childs' => $standard->childs])
+                                            @endif
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                @else
+                                <p class="text-mute"><i>Nothing standard available, please add new standard!</i></p>
+                                @endif
                             </div>
                             <div class="col-md-6">
-                                <h4>Add New Standard</h4>
+                                <h4 class="text-primary">Add New Standard</h4>
                                 <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                     <input type="hidden" id="id" name="id">
+                                    <input type="hidden" id="idStd" name="idStd" value="{{$idStd}}">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Standard Name</label>
                                         <input type="text" class="form-control" id="name" name="name" value="" />
@@ -65,6 +70,7 @@
     
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary" id="tombol-simpan" value="create">Add New</button>
+                                        <a href="{{route('data-standard-period.index')}}"><button type="button" class="btn btn-secondary ">Back</button></a> 
                                     </div>
                                 </form>      
       

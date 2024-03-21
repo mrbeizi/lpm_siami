@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStandardsTable extends Migration
+class CreateStandardPeriodsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateStandardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('standards', function (Blueprint $table) {
+        Schema::create('standard_periods', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->text('parent_id');
-            $table->unsignedInteger('id_standard_period');
-            $table->foreign('id_standard_period')->references('id')->on('standard_periods');
+            $table->string('title');
+            $table->integer('is_active');
+            $table->integer('is_archive')->nullable();
+            $table->date('archived_at')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateStandardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('standards');
+        Schema::dropIfExists('standard_periods');
     }
 }
