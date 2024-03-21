@@ -154,8 +154,8 @@ class PeriodController extends Controller
         $html ='<ul>';
         foreach ($standard->childs as $arr) {
             if(count($arr->childs)){
-            $html .='<li class="tree-view closed"><a class="tree-name">'.$arr->name.'</a>';                  
-                    $html.= $this->childView($arr);
+                $html .='<li class="tree-view closed"><a class="tree-name">'.$arr->name.'</a>';                  
+                $html .= $this->childView($arr);
                 }else{
                     $html .='<li class="tree-view"><a class="tree-name">'.$arr->name.'</a>';                                 
                     $html .="</li>";

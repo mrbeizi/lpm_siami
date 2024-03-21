@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('data-faculty.index')}}">@yield('title')</a>
+        <a href="{{route('data-standard-period.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -59,10 +59,13 @@
                                         <label for="parent_id" class="form-label">Standard</label>
                                         <select class="form-select" id="parent_id" name="parent_id" aria-label="Default select example" style="cursor:pointer;">
                                             <option value="" id="choose_standard">- Choose -</option>
-                                            @foreach ($allStandards as $standard => $standardName)
+                                            {{-- @foreach ($allStandards as $standard => $standardName)
                                                 <option value="{{ $standard }}" {{ old('parent_id') == $standard ? 'selected' : '' }}>
                                                     {{ $standardName }}
                                                 </option>
+                                            @endforeach --}}
+                                            @foreach($allStandards as $standard)
+                                            <option value="{{$standard->id}}">{{$standard->name}}</option>
                                             @endforeach
                                         </select>
                                         <span class="text-danger" id="parentIdErrorMsg" style="font-size: 10px;"></span>
@@ -74,6 +77,24 @@
                                     </div>
                                 </form>      
       
+                            </div>
+                        </div>
+
+                        <div class="divider">
+                            <div class="divider-text">Standard's Table:</div>
+                        </div>
+
+                        <div class="row p-3">
+                            <div class="col-sm-12 mt-3">
+                                <table class="table table-hover table-responsive" id="table_std">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Title</th>
+                                        <th>Actions</th>
+                                      </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                         
@@ -141,6 +162,70 @@
             }
         })
     }
+
+    $(document).ready(function () {
+        var table = $('#table_std').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                "url": "{{ route('index.standard-1') }}",
+                "type": "GET",
+                "data": function (data) {
+                    data.idStd = $('#idStd').val();
+                }
+            },
+            columns: [
+                {data: null,sortable:false,
+                    render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                }, 
+                {data: 'name',name: 'name'},
+                {data: 'action',name: 'action'},
+            ]
+        });
+    });
+
+    // TOMBOL DELETE
+    $(document).on('click', '.delete', function () {
+        dataId = $(this).attr('id');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "It will be deleted permanently!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+                return new Promise(function(resolve) {
+                    $.ajax({
+                        url: "{{ route('delete.standard-1') }}",
+                        type: 'DELETE',
+                        data: {id:dataId},
+                        dataType: 'json'
+                    }).done(function(response) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: 'Your data has been deleted.',
+                            type: 'success',
+                            timer: 2000
+                        })
+                        $('#table_std').DataTable().ajax.reload(null, true);
+                        location.reload();
+                    }).fail(function() {
+                        Swal.fire({
+                            title: 'Oops!',
+                            text: 'Something went wrong with ajax!',
+                            type: 'error',
+                            timer: 2000
+                        })
+                    });
+                });
+            },
+        });
+    });
 
 </script>
 <script src="{{asset('js/treeview.js')}}"></script>

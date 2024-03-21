@@ -10,8 +10,9 @@ class StandardController extends Controller
 {
     public function manageStandard($id)
     {
-        $standards = Standard::where('parent_id', '=', 0)->get();
-        $allStandards = Standard::pluck('name','id')->all();
+        $standards = Standard::where([['parent_id', '=', 0],['id_standard_period',$id]])->get();
+        // $allStandards = Standard::pluck('name','id')->all();
+        $allStandards = Standard::select('id','name','parent_id')->where('id_standard_period',$id)->get();
         return view('general.standard.standardTreeview',['standards' => $standards,'allStandards' => $allStandards,'idStd' => $id]);
     }
 
@@ -36,6 +37,27 @@ class StandardController extends Controller
                     'parent_id'  => $parent_id,
                     'id_standard_period'  => $request->idStd,
                 ]); 
+        return response()->json($post);
+    }
+
+    public function indexStandard(Request $request)
+    {
+        $datas = Standard::where('id_standard_period',$request->idStd)->get();
+        if($request->ajax()){
+            return datatables()->of($datas)
+            ->addColumn('action', function($data){
+                return '<button type="button" name="delete" id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn(true)
+            ->make(true);
+        }
+        return view('general.standard.standardTreeview', compact('datas'));
+    }
+
+    public function deleteStandard(Request $request)
+    {
+        $post = Standard::where('id',$request->id)->delete();     
         return response()->json($post);
     }
 }

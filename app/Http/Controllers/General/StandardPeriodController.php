@@ -14,7 +14,7 @@ class StandardPeriodController extends Controller
         if($request->ajax()){
             return datatables()->of($datas)
             ->addColumn('setting', function($data){
-                return '<a href="'.Route('setting.std',['id' => $data->id]).'" name="setting" class="dropdown-shortcuts-add text-body setting" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Manage Standard"><i class="bx bx-xs bx-cog bx-spin-hover"></i> '.'| '.$data->title.'</a>';
+                return '<a href="'.Route('setting.std',['id' => $data->id]).'" name="setting" class="dropdown-shortcuts-add text-body setting" data-id="'.$data->id.'" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Manage Standard"><span class="badge bg-label-primary"><i class="bx bx-xs bx-cog bx-spin-hover"></i> '.'| '.$data->title.'</span></a>';
             })->addColumn('action', function($data){                
                 $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
                 $button .= '&nbsp;&nbsp;';
