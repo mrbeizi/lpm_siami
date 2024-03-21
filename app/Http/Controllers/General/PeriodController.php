@@ -5,6 +5,7 @@ namespace App\Http\Controllers\General;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\General\Period;
+use App\Models\General\Standard;
 use Carbon\Carbon;
 
 class PeriodController extends Controller
@@ -34,7 +35,18 @@ class PeriodController extends Controller
             ->addIndexColumn(true)
             ->make(true);
         }
-        return view('general.period.index');
+
+        $datas = Standard::where('parent_id', '=', 0)->get();
+        $tree='<ul id="browser" class="filetree">';
+        foreach ($datas as $standard) {
+             $tree .='<li class="tree-view closed"<a class="tree-name">'.$standard->name.'</a>';
+             if(count($standard->childs)) {
+                $tree .=$this->childView($standard);
+            }
+        }
+        $tree .='<ul>';
+
+        return view('general.period.index', compact('tree'));
     }
 
     public function store(Request $request)
@@ -101,7 +113,57 @@ class PeriodController extends Controller
             }
         }
 
-        $post   = Period::updateOrCreate(['id' => $request->id],['is_active' => $req]); 
+        $post = Period::updateOrCreate(['id' => $request->id],['is_active' => $req]); 
         return response()->json($post);
     }
+
+    public function switchPeriodeMain(Request $request)
+    {
+        $datas = Period::select('is_active')->where('id',$request->id)->get();
+        if($datas->count() > 0){
+            foreach($datas as $data){
+                if($data->is_active == '1'){
+                    $data->update(['is_active' => 0]);
+                    $req = 1;
+                } else {
+                    $data->update(['is_active' => 1]);
+                    $req = 0;
+                }
+            }
+        }
+        $post = Period::updateOrCreate(['id' => $request->id],['is_active' => $req]); 
+        return response()->json($post);
+    }
+
+    public function standardTreeView()
+    {
+        $datas = Standard::where('parent_id', '=', 0)->get();
+        $tree='<ul id="browser" class="filetree"><li class="tree-view"></li>';
+        foreach ($datas as $standard) {
+             $tree .='<li class="tree-view closed"<a class="tree-name">'.$standard->name.'</a>';
+             if(count($standard->childs)) {
+                $tree .=$this->childView($standard);
+            }
+        }
+        $tree .='<ul>';
+        // return $tree;
+        return view('general.period.index',compact('tree'));
+    }
+
+    public function childView($standard){                 
+        $html ='<ul>';
+        foreach ($standard->childs as $arr) {
+            if(count($arr->childs)){
+            $html .='<li class="tree-view closed"><a class="tree-name">'.$arr->name.'</a>';                  
+                    $html.= $this->childView($arr);
+                }else{
+                    $html .='<li class="tree-view"><a class="tree-name">'.$arr->name.'</a>';                                 
+                    $html .="</li>";
+                }
+                               
+        }
+        
+        $html .="</ul>";
+        return $html;
+    }    
 }
