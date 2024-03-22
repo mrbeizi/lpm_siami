@@ -179,13 +179,15 @@
         }
     });
 
-    //TOMBOL TAMBAH DATA
-    $('#tombol-tambah').click(function () {
-        $('#button-simpan').val("create-post");
-        $('#id').val('');
+    //TOMBOL TAMBAH/UPLOAD DATA
+    $('body').on('click','.upload', function(){
+        var data_id = $(this).data('id');
+        var id_docim = $(this).data('data-iddocs');
+        alert(data_id);
         $('#form-tambah-edit').trigger("reset");
         $('#modal-judul').html("Add new data");
         $('#tambah-edit-modal').modal('show');
+
     });
 
     // TOMBOL TAMBAH
@@ -193,10 +195,13 @@
         $("#form-tambah-edit").validate({
             submitHandler: function (form) {
                 var actionType = $('#tombol-simpan').val();
+                var formData = new FormData($("#form-tambah-edit")[0]);
                 $('#tombol-simpan').html('Saving..');
 
                 $.ajax({
-                    data: $('#form-tambah-edit').serialize(), 
+                    data: formData,
+                    contentType: false,
+                    processData: false,
                     url: "{{ route('ami-implementation.store') }}",
                     type: "POST",
                     dataType: 'json',

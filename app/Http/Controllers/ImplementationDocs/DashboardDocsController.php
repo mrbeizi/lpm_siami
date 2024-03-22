@@ -5,8 +5,12 @@ namespace App\Http\Controllers\ImplementationDocs;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Implementation\DocumentImplementation;
+use App\Models\Implementation\FileDocumentImplementation;
 use App\Models\General\Faculty;
+use Illuminate\Support\Facades\Storage;
 use DB;
+use File;
+use Redirect;
 
 class DashboardDocsController extends Controller
 {
@@ -28,7 +32,7 @@ class DashboardDocsController extends Controller
         if($request->ajax()){
             return datatables()->of($datas)
             ->addColumn('action', function($data){
-                $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Upload" data-original-title="Upload" class="upload btn btn-primary btn-xs upload-post"><i class="bx bx-xs bx-upload"></i></a>';
+                $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-iddocs="'.$data->id_docim.'" data-toggle="tooltip" data-placement="bottom" title="Upload" data-original-title="Upload" class="upload btn btn-primary btn-xs"><i class="bx bx-xs bx-upload"></i></a>';
                 $button .= '&nbsp;&nbsp;';
                 $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Download" data-original-title="Download" class="download btn btn-info btn-xs download-post"><i class="bx bx-xs bx-download"></i></a>';
                 $button .= '&nbsp;&nbsp;';
@@ -58,14 +62,65 @@ class DashboardDocsController extends Controller
     public function edit($id)
     {
         $where = array('id' => $id);
-        $post  = DB::table('file_document_implementations')->where($where)->first();
+        $post  = FileDocumentImplementation::where($where)->first();
      
         return response()->json($post);
     }
 
     public function destroy($id)
     {
-        $post = DB::table('file_document_implementations')->where('id',$id)->delete();     
+        $post = FileDocumentImplementation::where('id',$id)->delete();     
+        return response()->json($post);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'fdi_name' => 'required',
+            'id_category' => 'required',
+            'file' => 'mimes:pdf|max:2000',
+        ],[
+            'fdi_name.required' => 'Anda belum menginputkan nama file',
+            'id_category.required' => 'Anda belum memilih kategori',
+            'file.mimes' => 'Format berkas harus .pdf',
+            'file.max' => 'Ukuran file lebih dari 2MB'
+        ]);
+
+        if($files = $request->file('file')) {
+            $berkas = $files->getClientOriginalName();
+            $path = public_path().'/dokumen-uploads/doc-implementasi/';
+
+            if(File::exists($path)){
+                $remove = Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->first();
+                File::deleteDirectory($path);
+                Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->delete();
+            } 
+            if(empty($errors)==true){
+                if(!File::isDirectory($path)){
+                    Storage::makeDirectory($path);
+                }
+                if(File::isDirectory("$path/".$berkas)==false){
+                    $files->move("$path/",$berkas);
+                } else { 
+                    return Redirect::back()->with('error', 'Terjadi Kesalahan');
+                }
+            }else{
+                print_r($errors);
+            }       
+           
+        }
+
+        $post = FileDocumentImplementation::updateOrCreate(['id' => $request->id],
+                [
+                    'fdi_name'          => $request->fdi_name,
+                    'id_document_implementation'          => $nidn,
+                    'id_category'  => $request->id_category,
+                    'id_auditor'    => $request->id_auditor,
+                    'uploaded_file' => $berkas,
+                    'link'    => $request->link,
+                    'validate'    => 1,
+                ]); 
+
         return response()->json($post);
     }
 }

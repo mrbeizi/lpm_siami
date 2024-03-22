@@ -59,7 +59,7 @@
                                     <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                         <div class="row">
                                             <input type="hidden" id="id" name="id">
-                                            <input type="hidden" id="idAuditee" name="idAuditee">
+                                            <input type="hidden" class="form-control" id="idAuditee" name="idAuditee">
 
                                             <div class="table-responsive-sm" id="table_data_auditee">
                                                 
@@ -175,13 +175,14 @@
     });
 
     //TOMBOL ADJUST SCHEDULE
-    $('body').on('click', '.adjust-post', function () {
+    $('body').on('click', '.adjust-post', function (data) {
         var data_id = $(this).data('id');
         $('#button-simpan').val("create-post");
         $('#id').val('');
         $('#form-tambah-edit').trigger("reset");
         $('#modal-judul').html("Adjust schedule");
         $('#tambah-edit-modal').modal('show');
+        $('#idAuditee').val($(this).data('id'));
         $.ajax({
             url: "{{ route('send-id-auditee') }}",
             type: 'POST',
@@ -244,14 +245,15 @@
     // EDIT DATA
     $('body').on('click', '.edit-post', function () {
         var data_id = $(this).data('id');
-        var data_id_auditee = $(this).data('data-auditee');
+        var data_id_auditee = $(this).attr('data-auditee');
+        $('#idAuditee').val(data_id_auditee);
         $.get('data-schedule/' + data_id + '/edit', function (data) {
             $('#modal-judul').html("Edit data");
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
               
             $('#id').val(data.id);
-            $('#idAuditee').val(data.data_id_auditee);
+            
             $('#start_date').val(data.start_date);
             $('#end_date').val(data.end_date);
             $('#auditor_chief').val(data.auditor_chief);
