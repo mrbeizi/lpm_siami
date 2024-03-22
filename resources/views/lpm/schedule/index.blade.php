@@ -252,12 +252,20 @@
             $('#tombol-simpan').val("edit-post");
             $('#tambah-edit-modal').modal('show');
               
-            $('#id').val(data.id);
-            
+            $('#id').val(data.id);            
             $('#start_date').val(data.start_date);
             $('#end_date').val(data.end_date);
             $('#auditor_chief').val(data.auditor_chief);
             $('#auditor_member').val(data.auditor_member);
+            $.ajax({
+                url: "{{ route('send-id-auditee') }}",
+                type: 'POST',
+                data: {id:data_id_auditee},
+                dataType: 'json',
+                success: function (response) {
+                    $("#table_data_auditee").html(response.data)
+                }
+            })
         })
     });
 
