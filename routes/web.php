@@ -52,4 +52,7 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('data-schedule','LPM\ScheduleController');
     Route::post('send-id-auditee','LPM\ScheduleController@getIdAuditee')->name('send-id-auditee');
+
+    Route::resource('data-assignment-letter','LPM\AssignmentLetterController');
+    Route::get('download-assignment-letter/{id}','LPM\AssignmentLetterController@downloadAssignmentLetter')->name('download-assignment-letter');
 });
