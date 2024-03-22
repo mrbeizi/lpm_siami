@@ -72,11 +72,11 @@
         </ul>
     </li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <a href="{{route('ami-implementation.index')}}" class="menu-link {{set_active('ami-implementation.index')}}">
         <i class='menu-icon tf-icons bx bx-file-find bx-tada-hover'></i>
         <div data-i18n="Pelaksanaan AMI">Pelaksanaan AMI</div>
         </a>
-        <ul class="menu-sub">
+        {{-- <ul class="menu-sub">
         <li class="menu-item">
             <a href="#" class="menu-link">
             <div data-i18n="Fakultas Bisnis">Fakultas Bisnis</div>
@@ -102,7 +102,7 @@
             <div data-i18n="Fakultas PBB">Fakultas PBB</div>
             </a>
         </li>             
-        </ul>
+        </ul> --}}
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle ">

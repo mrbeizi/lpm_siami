@@ -63,6 +63,22 @@
                 <div class="row row-bordered overflow-visible g-0">
                     <div class="dropdown-shortcuts-item col">
                         <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-file fs-4"></i>
+                        </span>
+                        <a href="{{route('data-document.index')}}" class="stretched-link">Documents</a>
+                        <small class="text-muted mb-0">Manage Documents</small>
+                    </div>
+                    <div class="dropdown-shortcuts-item col">
+                        <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-user fs-4"></i>
+                        </span>
+                        <a href="#" class="stretched-link">Users</a>
+                        <small class="text-muted mb-0">Manage Users</small>
+                    </div>
+                </div>
+                <div class="row row-bordered overflow-visible g-0">
+                    <div class="dropdown-shortcuts-item col">
+                        <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                         <i class="bx bx-book fs-4"></i>
                         </span>
                         <a href="{{route('data-department.index')}}" class="stretched-link">Department</a>

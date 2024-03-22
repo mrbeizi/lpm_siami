@@ -55,4 +55,9 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('data-assignment-letter','LPM\AssignmentLetterController');
     Route::get('download-assignment-letter/{id}','LPM\AssignmentLetterController@downloadAssignmentLetter')->name('download-assignment-letter');
+
+    Route::resource('data-document', 'ImplementationDocs\DocumentController');
+    Route::post('archived-doc','ImplementationDocs\DocumentController@archiveDoc')->name('archiveDoc');
+    Route::resource('ami-implementation','ImplementationDocs\DashboardDocsController');
+    Route::get('list-faculties/{id}','ImplementationDocs\DashboardDocsController@faculties')->name('list-faculties');
 });
