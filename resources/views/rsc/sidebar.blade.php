@@ -23,6 +23,22 @@
     
     
     <ul class="menu-inner py-1">
+
+    <li class="menu-item">
+        <div class="p-3">
+        <select class="form-select" id="switch_periode" name="switch_periode" aria-label="Default select example" style="cursor:pointer;">
+            @php $getPeriod = \App\Models\General\Period::select('id','title','is_active')->get(); @endphp
+            @foreach($getPeriod as $data)
+            @if($data->is_active == 1)
+            <option value="{{$data->id}}" selected>{{$data->title}}</option>
+            @else
+            <option value="{{$data->id}}">{{$data->title}}</option>
+            @endif
+            @endforeach
+        </select>
+    </div>
+    </li>
+
     <!-- Dashboards -->
     <li class="menu-item">
         <a href="{{route('dashboard')}}" class="menu-link {{set_active('dashboard')}}">
@@ -32,9 +48,8 @@
     </li>
 
     <!-- Apps & Pages -->
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">Main Menus</span></li>
     <li class="menu-item">
-        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-period.index')}}">
+        <a href="javascript:void(0);" class="menu-link menu-toggle {{set_active('data-period.index')}} OR {{set_active('data-schedule.index')}} OR {{set_active('data-assignment-letter.index')}}">
         <i class='menu-icon tf-icons bx bx-file-blank bx-tada-hover'></i>
         <div data-i18n="Perencanaan AMI">Perencanaan AMI</div>
         </a>
@@ -45,12 +60,12 @@
             </a>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{route('data-schedule.index')}}" class="menu-link {{set_active('data-schedule.index')}}">
             <div data-i18n="Jadwal AMI">Jadwal AMI</div>
             </a>
         </li>
         <li class="menu-item">
-            <a href="#" class="menu-link">
+            <a href="{{route('data-assignment-letter.index')}}" class="menu-link {{set_active('data-assignment-letter.index')}}">
             <div data-i18n="Surat Tugas Auditor">Surat Tugas Auditor</div>
             </a>
         </li>
@@ -161,3 +176,37 @@
 
 </aside>
 <!-- / Menu -->
+
+@section('script')
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
+
+    $('#switch_periode').on('change', function(e){
+        var optionSelected = $("option:selected", this);
+        var dataId = this.value;
+        // alert(dataId);
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "{{ route('switch-period-main') }}",
+                data:{'id':dataId},
+            }).done(function(data, response) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'State changed successfully!',
+                    type: 'success',
+                    customClass: { confirmButton: 'btn btn-primary' },
+                    buttonsStyling: false,
+                    timer: 2000
+                })
+            })
+    });
+</script>
+@endsection

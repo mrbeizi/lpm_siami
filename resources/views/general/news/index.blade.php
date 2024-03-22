@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('data-faculty.index')}}">@yield('title')</a>
+        <a href="{{route('data-news.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>

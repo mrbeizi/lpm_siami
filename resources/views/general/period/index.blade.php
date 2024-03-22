@@ -9,7 +9,7 @@
         <a href="{{route('dashboard')}}">Home</a>
       </li>
       <li class="breadcrumb-item">
-        <a href="{{route('data-faculty.index')}}">@yield('title')</a>
+        <a href="{{route('data-period.index')}}">@yield('title')</a>
       </li>
       <li class="breadcrumb-item active">Data</li>
     </ol>
@@ -47,7 +47,7 @@
 
                     <!-- MULAI MODAL FORM TAMBAH/EDIT-->
                     <div class="modal fade" id="tambah-edit-modal" aria-hidden="true">
-                        <div class="modal-dialog ">
+                        <div class="modal-dialog modal-lg modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modal-judul"></h5>
@@ -75,12 +75,30 @@
                                                 <span class="text-danger" id="endDateErrorMsg" style="font-size: 10px;"></span>
                                             </div> 
 
+                                            <label for="is_active" class="form-label">Period State:</label>
                                             <div class="mb-3">
-                                                <input class="form-check-input" type="checkbox" value="1" id="is_active" name="is_active" />
-                                                <span class="custom-option-header">
-                                                    <span class="fw-semibold" for="is_active"> Status Active</span>
-                                                </span>
+                                                <label class="switch switch-primary">
+                                                    <span class="switch-label">Closed</span>
+                                                    <input type="checkbox" class="switch-input" value="1" id="is_active" name="is_active" />
+                                                    <span class="switch-toggle-slider">
+                                                      <span class="switch-on">
+                                                        <i class="bx bx-check"></i>
+                                                      </span>
+                                                      <span class="switch-off">
+                                                        <i class="bx bx-x"></i>
+                                                      </span>
+                                                    </span>
+                                                    <span class="switch-label">Active</span>
+                                                  </label>
                                             </div> 
+                                            <div class="col-sm-12">
+                                                <div class="divider">
+                                                    <div class="divider-text">Standard's component:</div>
+                                                </div>
+                                                <div class="container p-2">
+                                                    {!! $tree !!}
+                                                </div>
+                                            </div>
                                             
                                             <div class="col-sm-offset-2 col-sm-12">
                                                 <hr class="mt-2">
@@ -92,6 +110,8 @@
                                         </div>
 
                                     </form>
+
+                                    
                                 </div>
                                 <div class="modal-footer">
                                 </div>

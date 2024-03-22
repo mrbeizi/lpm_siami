@@ -222,8 +222,6 @@
                         $('#idFacultyErrorMsg').text(response.responseJSON.errors.id_faculty);
                         $('#idDepartmentErrorMsg').text(response.responseJSON.errors.id_department);
                         $('#dekanErrorMsg').text(response.responseJSON.errors.dekan);
-                        $('#sekretarisDekanErrorMsg').text(response.responseJSON.errors.sekretaris_dekan);
-                        $('#koProdiErrorMsg').text(response.responseJSON.errors.ko_prodi);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',

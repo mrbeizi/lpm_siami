@@ -18,8 +18,8 @@ class CreateAuditeesTable extends Migration
             $table->string('id_faculty');
             $table->string('id_department');
             $table->string('dekan');
-            $table->string('sekretaris_dekan');
-            $table->string('ko_prodi');
+            $table->string('sekretaris_dekan')->nullable();
+            $table->string('ko_prodi')->nullable();
             $table->integer('id_periode');
             $table->timestamps();
         });

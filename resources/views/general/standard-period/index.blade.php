@@ -78,7 +78,6 @@
                                                     <span class="switch-label">Active</span>
                                                   </label>
                                             </div>
-                                            <hr class="mt-2">
                                             <div class="col-sm-offset-2 col-sm-12">
                                                 <hr class="mt-2">
                                                 <div class="float-sm-end">
