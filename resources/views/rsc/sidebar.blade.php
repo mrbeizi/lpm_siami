@@ -39,6 +39,7 @@
     </div>
     </li>
 
+    @if(Auth::user()->role_id == 1)
     <!-- Dashboards -->
     <li class="menu-item">
         <a href="{{route('dashboard')}}" class="menu-link {{set_active('dashboard')}}">
@@ -76,33 +77,6 @@
         <i class='menu-icon tf-icons bx bx-file-find bx-tada-hover'></i>
         <div data-i18n="Pelaksanaan AMI">Pelaksanaan AMI</div>
         </a>
-        {{-- <ul class="menu-sub">
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div data-i18n="Fakultas Bisnis">Fakultas Bisnis</div>
-            </a>
-        </li>             
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div data-i18n="Fakultas Komputer">Fakultas Komputer</div>
-            </a>
-        </li>             
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div data-i18n="Fakultas Teknik">Fakultas Teknik</div>
-            </a>
-        </li>             
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div data-i18n="Fakultas Seni">Fakultas Seni</div>
-            </a>
-        </li>             
-        <li class="menu-item">
-            <a href="#" class="menu-link">
-            <div data-i18n="Fakultas PBB">Fakultas PBB</div>
-            </a>
-        </li>             
-        </ul> --}}
     </li>
     <li class="menu-item">
         <a href="javascript:void(0);" class="menu-link menu-toggle ">
@@ -171,7 +145,47 @@
         <i class="menu-icon tf-icons bx bx-folder-open bx-tada-hover"></i>
         <div data-i18n="Dokumen SPMI">Dokumen SPMI</div>
         </a>
-    </li>    
+    </li>
+    @elseif(Auth::user()->role_id == 2)
+    <li class="menu-item">
+        <a href="{{route('dashboard')}}" class="menu-link {{set_active('dashboard')}}">
+        <i class="menu-icon tf-icons bx bx-home-circle bx-tada-hover"></i>
+        <div data-i18n="Dashboards">Dashboards</div>
+        </a>
+    </li>  
+    <li class="menu-item">
+        <a href="{{route('ami-implementation.index')}}" class="menu-link {{set_active('ami-implementation.index')}}">
+        <i class='menu-icon tf-icons bx bx-file-find bx-tada-hover'></i>
+        <div data-i18n="Pelaksanaan AMI">Pelaksanaan AMI</div>
+        </a>
+    </li>
+    @elseif(Auth::user()->role_id == 3)
+    <li class="menu-item">
+        <a href="{{route('dashboard')}}" class="menu-link {{set_active('dashboard')}}">
+        <i class="menu-icon tf-icons bx bx-home-circle bx-tada-hover"></i>
+        <div data-i18n="Dashboards">Dashboards</div>
+        </a>
+    </li>  
+    <li class="menu-item">
+        <a href="{{route('ami-implementation.index')}}" class="menu-link {{set_active('ami-implementation.index')}}">
+        <i class='menu-icon tf-icons bx bx-file-find bx-tada-hover'></i>
+        <div data-i18n="Pelaksanaan AMI">Pelaksanaan AMI</div>
+        </a>
+    </li>
+    @else
+    <li class="menu-item">
+        <a href="{{route('dashboard')}}" class="menu-link {{set_active('dashboard')}}">
+        <i class="menu-icon tf-icons bx bx-home-circle bx-tada-hover"></i>
+        <div data-i18n="Dashboards">Dashboards</div>
+        </a>
+    </li>  
+    <li class="menu-item">
+        <a href="{{route('ami-implementation.index')}}" class="menu-link {{set_active('ami-implementation.index')}}">
+        <i class='menu-icon tf-icons bx bx-file-find bx-tada-hover'></i>
+        <div data-i18n="Pelaksanaan AMI">Pelaksanaan AMI</div>
+        </a>
+    </li>
+    @endif
     </ul>
 
 </aside>

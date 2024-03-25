@@ -19,9 +19,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('dashboard');
+// Route::get('/home', 'HomeController@index')->name('dashboard');
+Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4']], function() {
+    Route::post('/logout', 'Auth\AuthController@logout')->name('logout');
+    Route::get('/redirect', 'RedirectController@cek');
+});
 
-Route::group(['middleware' => 'auth'], function(){
+// superadmin or lpm
+Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
+    Route::get('/lpm', 'LPM\DashboardController@index')->name('dashboard');
     Route::resource('user-role', 'LPM\UserRoleController');
     Route::resource('data-user', 'UserController');
     Route::resource('data-auditee', 'LPM\AuditeeController');
@@ -55,9 +61,28 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::resource('data-assignment-letter','LPM\AssignmentLetterController');
     Route::get('download-assignment-letter/{id}','LPM\AssignmentLetterController@downloadAssignmentLetter')->name('download-assignment-letter');
+});
 
+Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4']], function() {
+    Route::get('/auditor', 'Auditors\DashboardController@index');
     Route::resource('data-document', 'ImplementationDocs\DocumentController');
     Route::post('archived-doc','ImplementationDocs\DocumentController@archiveDoc')->name('archiveDoc');
     Route::resource('ami-implementation','ImplementationDocs\DashboardDocsController');
     Route::get('list-faculties/{id}','ImplementationDocs\DashboardDocsController@faculties')->name('list-faculties');
+
+});
+
+// auditor
+Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
+    Route::get('/auditor', 'Auditors\DashboardController@index');
+});
+
+// faculty
+Route::group(['middleware' => ['auth', 'checkrole:3']], function() {
+    Route::get('/fakultas', 'Faculty\DashboardController@index');
+});
+
+// rectorat
+Route::group(['middleware' => ['auth', 'checkrole:4']], function() {
+    Route::get('/rektorat', 'Rectorat\DashboardController@index');
 });

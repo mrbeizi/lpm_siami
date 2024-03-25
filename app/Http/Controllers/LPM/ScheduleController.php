@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Lpm\Schedule;
 use App\Models\Lpm\Auditee;
+use App\Models\Auditors\Auditor;
 use App\Models\General\Employee;
 use Carbon\Carbon;
 
@@ -46,8 +47,7 @@ class ScheduleController extends Controller
             ->addIndexColumn(true)
             ->make(true);
         }
-        $getEmployee = Employee::select('employees.id','employees.name')->get();
-        
+        $getEmployee = Employee::select('employees.id','employees.name')->get();        
         return view('lpm.schedule.index',['getEmployee' => $getEmployee]);
     }
 

@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class UserRole extends Model
 {
     protected $guarded = [];
+
+    public function users() {
+        return $this->hasMany(User::class);
+    }
 }

@@ -1,28 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\LPM;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\General\Announcement;
 use App\Models\General\News;
 
-class HomeController extends Controller
+class DashboardController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $getAnnouncement = Announcement::select('id','title','publish_date','attachment','updated_at')->orderBy('id','DESC')->get();

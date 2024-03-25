@@ -32,6 +32,7 @@
         <!--/ Style Switcher -->
 
         <!-- Quick links  -->
+        @if(Auth::user()->role_id == 1)
         <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
             <i class='bx bx-cog bx-sm'></i> <b>Data Settings</b>
@@ -128,6 +129,11 @@
             </div>
         </li>
         <!-- Quick links -->
+        @else
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            <b>Login as {{Auth::user()->role->role_name}}</b>
+        </a>
+        @endif
 
         <!-- User -->
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
