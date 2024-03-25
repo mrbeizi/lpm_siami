@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-sm-2">
+                            <div class="col-sm-3">
                                 <fieldset class="form-group">
                                     <select class="select2 form-control border border-primary" id="id_faculty" name="id_faculty" aria-label="Default select example" style="cursor:pointer;">
                                         <option value="" id="choose_faculty">- Choose faculty -</option>

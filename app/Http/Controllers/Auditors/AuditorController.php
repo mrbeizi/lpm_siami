@@ -19,7 +19,7 @@ class AuditorController extends Controller
     {
         $datas = Auditor::leftJoin('faculties','faculties.id','=','auditors.id_faculty')
             ->leftJoin('departments','departments.id','=','auditors.id_department')
-            ->leftJoin('employees','employees.id','=','auditors.auditor_name')
+            ->leftJoin('employees','employees.id','=','auditors.id_employee')
             ->select('auditors.id AS id','auditors.nidn','employees.name AS auditor_name','auditors.sk_sertifikat_auditor','faculties.faculty_name','departments.department_name')
             ->get();
 

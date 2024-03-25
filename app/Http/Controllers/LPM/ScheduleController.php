@@ -33,7 +33,7 @@ class ScheduleController extends Controller
                     $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id_schedule.'" data-toggle="tooltip" data-placement="bottom" title="Edit Schedule" data-original-title="Edit Schedule" class="edit btn btn-success btn-xs edit-post disabled"><i class="bx bx-xs bx-edit"></i></a>';
                     return $button;
                 } else {
-                    $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Adjust Schedule" data-original-title="Adjust Schedule" class="adjust btn btn-warning btn-xs adjust-post"><i class="bx bx-xs bx-body"></i></a>';
+                    $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Adjust Schedule" data-original-title="Adjust Schedule" class="adjust btn btn-warning btn-xs adjust-post disabled"><i class="bx bx-xs bx-body"></i></a>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id_schedule.'" data-auditee="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit Schedule" data-original-title="Edit Schedule" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
                     return $button;
