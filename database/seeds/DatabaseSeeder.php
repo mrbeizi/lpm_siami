@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             DocImplementationSeeder::class,
             EmpSeeder::class,
+            PeriodeAMISeeder::class,
         ]);
     }
 }

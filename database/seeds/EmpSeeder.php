@@ -23,7 +23,6 @@ class EmpSeeder extends Seeder
               'nip' => $faker->numberBetween(100000,890000),
               'nidn' => $faker->numberBetween(100000,890000),
               'name' => $faker->name,
-              'password' => bcrypt('123456'),
               'email' => $faker->email,
               'phone_number' => $faker->phoneNumber(),
               'created_at' => $faker->date(now()),

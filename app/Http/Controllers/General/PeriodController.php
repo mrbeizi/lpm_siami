@@ -36,7 +36,9 @@ class PeriodController extends Controller
             ->make(true);
         }
 
-        $datas = Standard::where('parent_id', '=', 0)->get();
+        $datas = Standard::leftJoin('standard_periods','standard_periods.id','=','standards.id_standard_period')
+            ->where([['standards.parent_id', '=', 0],['standard_periods.is_active',1]])
+            ->get();
         $tree='<ul id="browser" class="filetree">';
         foreach ($datas as $standard) {
              $tree .='<li class="tree-view closed"<a class="tree-name">'.$standard->name.'</a>';
@@ -137,7 +139,9 @@ class PeriodController extends Controller
 
     public function standardTreeView()
     {
-        $datas = Standard::where('parent_id', '=', 0)->get();
+        $datas = Standard::leftJoin('standard_periods','standard_periods.id','=','standards.id_standard_period')
+            ->where([['standards.parent_id', '=', 0],['standard_periods.is_active',1]])
+            ->get();
         $tree='<ul id="browser" class="filetree"><li class="tree-view"></li>';
         foreach ($datas as $standard) {
              $tree .='<li class="tree-view closed"<a class="tree-name">'.$standard->name.'</a>';

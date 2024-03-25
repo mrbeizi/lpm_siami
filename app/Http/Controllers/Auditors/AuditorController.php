@@ -10,6 +10,7 @@ use App\Models\General\Department;
 use App\Models\General\Employee;
 use App\Models\General\Period;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use File;
 use Redirect;
 
@@ -20,13 +21,13 @@ class AuditorController extends Controller
         $datas = Auditor::leftJoin('faculties','faculties.id','=','auditors.id_faculty')
             ->leftJoin('departments','departments.id','=','auditors.id_department')
             ->leftJoin('employees','employees.id','=','auditors.id_employee')
-            ->select('auditors.id AS id','auditors.nidn','employees.name AS auditor_name','auditors.sk_sertifikat_auditor','faculties.faculty_name','departments.department_name')
+            ->select('auditors.id AS id','auditors.id_employee','auditors.nidn','employees.name AS auditor_name','auditors.sk_sertifikat_auditor','faculties.faculty_name','departments.department_name')
             ->get();
 
         if($request->ajax()){
             return datatables()->of($datas)
             ->addColumn('view_document', function($data){
-                return '<a href="'.asset('dokumen-uploads/'.$data->nidn.'/sk-dan-sertifikat/'.$data->auditor_name.'/'.$data->sk_sertifikat_auditor.'').'" target="_blank" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Open document" data-original-title="Open" class="view btn btn-outline-primary btn-xs"><i class="bx bx-show"></i></a>';
+                return '<a href="'.asset('dokumen-uploads/sk-dan-sertifikat/'.$data->id_employee.'/'.$data->sk_sertifikat_auditor.'').'" target="_blank" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Open document" data-original-title="Open" class="view btn btn-outline-primary btn-xs"><i class="bx bx-show"></i></a>';
             })->addColumn('action', function($data){
                 $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-edit"></i></a>';
                 $button .= '&nbsp;&nbsp;';
@@ -69,13 +70,13 @@ class AuditorController extends Controller
 
         if($files = $request->file('file')) {
             $berkas = $files->getClientOriginalName();
-            $path = public_path().'/dokumen-uploads/'.$request->nidn.'/sk-dan-sertifikat/'.$request->auditor_name;
+            $path = public_path().'/dokumen-uploads/sk-dan-sertifikat/'.$request->auditor_name;
 
-            if(File::exists($path)){
-                $remove = Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->first();
-                File::deleteDirectory($path);
-                Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->delete();
-            } 
+            // if(File::exists($path)){
+            //     $remove = Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->first();
+            //     File::deleteDirectory($path);
+            //     Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->delete();
+            // } 
             if(empty($errors)==true){
                 if(!File::isDirectory($path)){
                     Storage::makeDirectory($path);
@@ -105,7 +106,8 @@ class AuditorController extends Controller
                 [
                     'id_periode'          => $request->id_periode,
                     'nidn'          => $nidn,
-                    'auditor_name'  => $request->auditor_name,
+                    'password'  => Hash::make($nidn),
+                    'id_employee'  => $request->auditor_name,
                     'id_faculty'          => $request->id_faculty,
                     'id_department'    => $request->id_department,
                     'sk_sertifikat_auditor' => $berkas,

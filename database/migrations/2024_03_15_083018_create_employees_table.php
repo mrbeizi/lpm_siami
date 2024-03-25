@@ -18,7 +18,6 @@ class CreateEmployeesTable extends Migration
             $table->integer('nip')->nullable();
             $table->integer('nidn')->nullable();
             $table->string('name');
-            $table->string('password');
             $table->string('email')->unique()->nullable();
             $table->string('phone_number')->nullable();
             $table->timestamps();
