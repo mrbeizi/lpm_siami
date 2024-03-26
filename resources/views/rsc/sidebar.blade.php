@@ -154,7 +154,7 @@
         </a>
     </li>  
     <li class="menu-item">
-        <a href="{{route('ami-implementation.index')}}" class="menu-link {{set_active('ami-implementation.index')}}">
+        <a href="{{route('a-ami-implementation.index')}}" class="menu-link {{set_active('a-ami-implementation.index')}}">
         <i class='menu-icon tf-icons bx bx-file-find bx-tada-hover'></i>
         <div data-i18n="Pelaksanaan AMI">Pelaksanaan AMI</div>
         </a>

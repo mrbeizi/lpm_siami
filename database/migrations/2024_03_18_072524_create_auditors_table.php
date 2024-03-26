@@ -16,8 +16,7 @@ class CreateAuditorsTable extends Migration
         Schema::create('auditors', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nidn');
-            $table->string('password');
-            $table->string('id_employee');
+            $table->integer('id_employee');
             $table->integer('id_faculty');
             $table->integer('id_department');
             $table->string('sk_sertifikat_auditor')->nullable();

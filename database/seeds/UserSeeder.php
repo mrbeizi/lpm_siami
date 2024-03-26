@@ -15,16 +15,17 @@ class UserSeeder extends Seeder
     {
         $faker = Faker::create('id_EN');
 
-        for($i = 1; $i <= 10; $i++){
+        for($i = 1; $i <= 5; $i++){
  
             // insert data ke table pegawai menggunakan Faker
             User::insert([
-              'name' => $faker->name,
-              'email' => $faker->email,
-              'password' => bcrypt('123456'),
-              'role_id' => $faker->numberBetween(1,4),
-              'created_at' => $faker->date(now()),
-              'updated_at' => $faker->date(now()),
+                'id_employee' => $faker->numberBetween(1,10),
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'password' => bcrypt('123456'),
+                'role_id' => $faker->numberBetween(1,4),
+                'created_at' => $faker->date(now()),
+                'updated_at' => $faker->date(now()),
           ]);
 
         }

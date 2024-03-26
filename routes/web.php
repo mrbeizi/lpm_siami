@@ -61,20 +61,21 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
 
     Route::resource('data-assignment-letter','LPM\AssignmentLetterController');
     Route::get('download-assignment-letter/{id}','LPM\AssignmentLetterController@downloadAssignmentLetter')->name('download-assignment-letter');
-});
 
-Route::group(['middleware' => ['auth', 'checkrole:1,2,3,4']], function() {
     Route::get('/auditor', 'Auditors\DashboardController@index');
     Route::resource('data-document', 'ImplementationDocs\DocumentController');
     Route::post('archived-doc','ImplementationDocs\DocumentController@archiveDoc')->name('archiveDoc');
     Route::resource('ami-implementation','ImplementationDocs\DashboardDocsController');
     Route::get('list-faculties/{id}','ImplementationDocs\DashboardDocsController@faculties')->name('list-faculties');
-
 });
 
 // auditor
 Route::group(['middleware' => ['auth', 'checkrole:2']], function() {
     Route::get('/auditor', 'Auditors\DashboardController@index');
+    Route::resource('a-data-document', 'Auditors\DocumentController');
+    Route::post('a-archived-doc','Auditors\DocumentController@archiveDoc')->name('a-archiveDoc');
+    Route::resource('a-ami-implementation','Auditors\DashboardDocsController');
+    Route::get('a-list-faculties/{id}','Auditors\DashboardDocsController@faculties')->name('a-list-faculties');
 });
 
 // faculty

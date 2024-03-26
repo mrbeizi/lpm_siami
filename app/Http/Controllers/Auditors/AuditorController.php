@@ -9,6 +9,7 @@ use App\Models\General\Faculty;
 use App\Models\General\Department;
 use App\Models\General\Employee;
 use App\Models\General\Period;
+use App\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use File;
@@ -92,26 +93,38 @@ class AuditorController extends Controller
            
         }
 
-        # to check if any nip or nidn
-        $checkNIP = Employee::select('nidn')->where('id',$request->auditor_name)->get();
-        if($checkNIP->count() > 0){
-            foreach($checkNIP as $d){
-                $nidn = $d->nidn;
+        # get employee datas to store into user table
+        $query = Employee::select('nidn','name','email')->where('id',$request->auditor_name)->get();
+        if($query->count() > 0){
+            foreach($query as $data){
+                $empNIDN = $data->nidn;
+                $empName = $data->name;
+                $empEmail = $data->email;
             }
         } else {
-            $nidn = '';
+            $empNIDN = '';
+            $empName = 'No name';
+            $empEmail = 'temporary@gmail.com';
         }
 
         $post = Auditor::updateOrCreate(['id' => $request->id],
                 [
                     'id_periode'          => $request->id_periode,
-                    'nidn'          => $nidn,
-                    'password'  => Hash::make($nidn),
+                    'nidn'          => $empNIDN,
                     'id_employee'  => $request->auditor_name,
                     'id_faculty'          => $request->id_faculty,
                     'id_department'    => $request->id_department,
                     'sk_sertifikat_auditor' => $berkas,
-                ]); 
+                ]);                 
+
+                User::updateOrCreate(['id' => $request->id],
+                [
+                    'id_employee' => $request->auditor_name,
+                    'name' => $empName,
+                    'email' => $empEmail,
+                    'password' => Hash::make('123456'),
+                    'role_id' => 2,
+                ]);
 
         return response()->json($post);
     }
