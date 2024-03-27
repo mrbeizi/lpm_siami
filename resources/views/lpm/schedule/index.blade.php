@@ -89,8 +89,8 @@
                                                 <label for="auditor_chief" class="form-label">Auditor Chief</label>
                                                 <select class="select2 form-control" id="auditor_chief" name="auditor_chief" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="" readonly>- Choose -</option>
-                                                    @foreach($getEmployee as $employee)
-                                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                    @foreach($getAuditors as $auditor)
+                                                    <option value="{{$auditor->id_employee}}">{{$auditor->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger" id="auditorNameErrorMsg"></span>
@@ -100,8 +100,8 @@
                                                 <label for="auditor_member" class="form-label">Auditor Members</label>
                                                 <select class="select2 form-control" id="auditor_member" name="auditor_member" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="" readonly>- Choose -</option>
-                                                    @foreach($getEmployee as $employee)
-                                                    <option value="{{$employee->id}}">{{$employee->name}}</option>
+                                                    @foreach($getAuditors as $auditor)
+                                                    <option value="{{$auditor->id_employee}}">{{$auditor->name}}</option>
                                                     @endforeach
                                                 </select>
                                                 <span class="text-danger" id="auditorNameErrorMsg"></span>

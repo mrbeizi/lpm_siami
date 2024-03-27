@@ -47,8 +47,11 @@ class ScheduleController extends Controller
             ->addIndexColumn(true)
             ->make(true);
         }
-        $getEmployee = Employee::select('employees.id','employees.name')->get();        
-        return view('lpm.schedule.index',['getEmployee' => $getEmployee]);
+        $getEmployee = Employee::select('employees.id','employees.name')->get();
+        $getAuditors = Auditor::leftJoin('employees','employees.id','=','auditors.id_employee')
+            ->select('auditors.id AS id','auditors.id_employee','employees.name') 
+            ->get();       
+        return view('lpm.schedule.index',['getEmployee' => $getEmployee,'getAuditors' => $getAuditors]);
     }
 
     public function store(Request $request)

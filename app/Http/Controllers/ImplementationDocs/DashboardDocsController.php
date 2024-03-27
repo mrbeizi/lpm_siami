@@ -32,18 +32,39 @@ class DashboardDocsController extends Controller
         if($request->ajax()){
             return datatables()->of($datas)
             ->addColumn('action', function($data){
-                $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-iddocs="'.$data->id_docim.'" data-toggle="tooltip" data-placement="bottom" title="Upload" data-original-title="Upload" class="upload btn btn-primary btn-xs"><i class="bx bx-xs bx-upload"></i></a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Download" data-original-title="Download" class="download btn btn-info btn-xs download-post"><i class="bx bx-xs bx-download"></i></a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="javascript:void(0)" name="see-file" data-toggle="tooltip" data-placement="bottom" title="See document" data-id="'.$data->id.'" data-placement="bottom" data-original-title="seedocs" class="seedocs btn btn-warning btn-xs show-post"><i class="bx bx-xs bx-show-alt"></i></a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>';
-                return $button;
+                if($data->id_docim == 1 || $data->id_docim == 3){
+                    $button = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-iddocs="'.$data->id_docim.'" data-toggle="tooltip" data-placement="bottom" title="Upload" data-original-title="Upload" class="upload btn btn-primary btn-xs"><i class="bx bx-xs bx-upload"></i></a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<a href="'.asset('dokumen-uploads/doc-implementasi/'.$data->uploaded_file.'').'" target="_blank" name="see-file" data-toggle="tooltip" data-placement="bottom" title="See document" data-id="'.$data->id.'" data-placement="bottom" data-original-title="seedocs" class="seedocs btn btn-warning btn-xs show-post"><i class="bx bx-xs bx-show-alt"></i></a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Edit" data-original-title="Edit" class="edit btn btn-success btn-xs edit-post"><i class="bx bx-xs bx-edit"></i></a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Delete" class="delete btn btn-danger btn-xs"><i class="bx bx-xs bx-trash"></i></button>';
+                    return $button;
+                }elseif($data->id_docim == 4){
+                    $button = '<a href="'.asset('dokumen-uploads/doc-implementasi/'.$data->uploaded_file.'').'" target="_blank" name="see-file" data-toggle="tooltip" data-placement="bottom" title="See document" data-id="'.$data->id.'" data-placement="bottom" data-original-title="seedocs" class="seedocs btn btn-warning btn-xs show-post"><i class="bx bx-xs bx-show-alt"></i></a>';
+                    return $button;
+                }else{
+                    $button = '<a href="'.asset('dokumen-uploads/doc-implementasi/'.$data->uploaded_file.'').'" target="_blank" data-toggle="tooltip" data-id="'.$data->id.'" data-toggle="tooltip" data-placement="bottom" title="Download" data-original-title="Download" class="download btn btn-info btn-xs download-post"><i class="bx bx-xs bx-download"></i></a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<a href="'.asset('dokumen-uploads/doc-implementasi/'.$data->uploaded_file.'').'" target="_blank" name="see-file" data-toggle="tooltip" data-placement="bottom" title="See document" data-id="'.$data->id.'" data-placement="bottom" data-original-title="seedocs" class="seedocs btn btn-warning btn-xs show-post"><i class="bx bx-xs bx-show-alt"></i></a>';
+                    return $button;
+                }
+            })->addColumn('state', function($data){
+                $states = $this->getState($data->id);
+                if($states != 'x'){
+                    if($states['validate'] == 1){
+                        return '<span class="badge bg-label-success me-1">Uploaded</span>';
+                    }elseif($states['validate'] == 2){
+                        return '<span class="badge bg-label-warning me-1">Pending</span>';
+                    }else{
+                        return '<span class="badge bg-label-danger me-1">No data</span>';
+                    }
+                }else{
+                    return '<span class="badge bg-label-danger me-1">No data</span>';
+                }
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','state'])
             ->addIndexColumn(true)
             ->make(true);
         }
@@ -57,6 +78,16 @@ class DashboardDocsController extends Controller
             ->where('departments.id_faculty',$id)
             ->pluck('departments.department_name','departments.id');
         return json_encode($datas);
+    }
+
+    protected function getState($idFile)
+    {
+        $datas = FileDocumentImplementation::select('validate')->where('id',$idFile)->first();
+        if($datas){
+            return $datas;
+        }else{
+            return 'x';
+        }
     }
 
     public function edit($id)
@@ -76,12 +107,8 @@ class DashboardDocsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fdi_name' => 'required',
-            'id_category' => 'required',
             'file' => 'mimes:pdf|max:2000',
         ],[
-            'fdi_name.required' => 'Anda belum menginputkan nama file',
-            'id_category.required' => 'Anda belum memilih kategori',
             'file.mimes' => 'Format berkas harus .pdf',
             'file.max' => 'Ukuran file lebih dari 2MB'
         ]);
@@ -90,11 +117,11 @@ class DashboardDocsController extends Controller
             $berkas = $files->getClientOriginalName();
             $path = public_path().'/dokumen-uploads/doc-implementasi/';
 
-            if(File::exists($path)){
-                $remove = Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->first();
-                File::deleteDirectory($path);
-                Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->delete();
-            } 
+            // if(File::exists($path)){
+            //     $remove = Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->first();
+            //     File::deleteDirectory($path);
+            //     Auditor::where([['id','=',$request->id],['nidn','=',$request->nidn]])->delete();
+            // } 
             if(empty($errors)==true){
                 if(!File::isDirectory($path)){
                     Storage::makeDirectory($path);
@@ -110,12 +137,8 @@ class DashboardDocsController extends Controller
            
         }
 
-        $post = FileDocumentImplementation::updateOrCreate(['id' => $request->id],
+        $post = FileDocumentImplementation::where('id',$request->id)->update(
                 [
-                    'fdi_name'          => $request->fdi_name,
-                    'id_document_implementation'          => $nidn,
-                    'id_category'  => $request->id_category,
-                    'id_auditor'    => $request->id_auditor,
                     'uploaded_file' => $berkas,
                     'link'    => $request->link,
                     'validate'    => 1,

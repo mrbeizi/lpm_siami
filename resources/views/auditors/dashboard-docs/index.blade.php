@@ -44,12 +44,18 @@
                                 </fieldset>
                             </div>
                         </div>
-                        <hr>
+                        <div class="row mb-3">
+                            <div class="col-sm-12">
+                                @foreach($search as $d) @endforeach 
+                                <small class="text-muted"> as auditor of: Faculty of {{$d->faculty_name}} - Department of {{$d->department_name}}</small>
+                            </div>
+                        </div>
                             <table class="table table-hover table-responsive" id="table_amidocs">
                               <thead>
                                 <tr>
                                   <th>#</th>
                                   <th>Document Name</th>
+                                  <th>State</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -69,21 +75,6 @@
                                     <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                         <div class="row">
                                             <input type="hidden" id="id" name="id">
-                                            <div class="mb-3">
-                                                <label for="fdi_name" class="form-label">Document Name</label>
-                                                <input type="text" class="form-control" id="fdi_name" name="fdi_name" value="" placeholder="e.g SK Auditor" />
-                                                <span class="text-danger" id="fdiNameErrorMsg" style="font-size: 10px;"></span>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="id_category" class="form-label">Category</label>
-                                                <select class="form-select" id="id_category" name="id_category" aria-label="Default select example" style="cursor:pointer;">
-                                                    <option value="" id="choose_category">- Choose -</option>
-                                                    <option value="1">SK Auditor</option>
-                                                    <option value="2">Form Monitoring</option>
-                                                </select>
-                                                <span class="text-danger" id="idCategoryErrorMsg" style="font-size: 10px;"></span>
-                                            </div>
 
                                             <div class="mb-3">
                                                 <label for="file" class="form-label">Upload Document</label>
@@ -160,6 +151,7 @@
                         }
                     }, 
                     {data: 'doc_name',name: 'doc_name'},
+                    {data: 'state',name: 'state'},
                     {data: 'action',name: 'action'},
                 ]
             });
@@ -179,14 +171,35 @@
         }
     });
 
+    $('select[name="id_faculty"]').on('change', function() {
+        $('#id_department').empty();
+        var facultyID = $(this).val();
+        if(facultyID) {
+            $.ajax({
+                url: '{{route("a-list-faculties", ":id")}}'.replace(":id", facultyID),
+                type: "GET",
+                dataType: "json",
+                success:function(data) { 
+                    $('select[name="id_department"]').removeClass('d-none');
+                    $('select[name="id_department"]').append('<option value="">'+ '- Choose department -' +'</option>');
+                    $.each(data, function(key, value) {
+                    $('select[name="id_department"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    });
+                }
+            });
+        }else{
+            $('select[name="id_department"]').removeClass('d-none');
+        }
+    });
+
     //TOMBOL TAMBAH/UPLOAD DATA
     $('body').on('click','.upload', function(){
         var data_id = $(this).data('id');
         var id_docim = $(this).data('data-iddocs');
-        alert(data_id);
         $('#form-tambah-edit').trigger("reset");
         $('#modal-judul').html("Add new data");
         $('#tambah-edit-modal').modal('show');
+        $('#id').val(data_id);
 
     });
 
@@ -240,109 +253,6 @@
             }
         })
     }
-
-    // EDIT DATA
-    $('body').on('click', '.edit-post', function () {
-        var data_id = $(this).data('id');
-        $.get('a-ami-implementation/' + data_id + '/edit', function (data) {
-            $('#modal-judul').html("Edit data");
-            $('#tombol-simpan').val("edit-post");
-            $('#tambah-edit-modal').modal('show');
-              
-            $('#id').val(data.id);
-            $('#fdi_name').val(data.fdi_name);
-            $('#id_category').val(data.id_category);
-            $('#file').val(data.file);
-            $('#link').val(data.link);
-        })
-    });
-
-    // TOMBOL DELETE
-    $(document).on('click', '.delete', function () {
-        dataId = $(this).attr('id');
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "It will be deleted permanently!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            showLoaderOnConfirm: true,
-            preConfirm: function() {
-                return new Promise(function(resolve) {
-                    $.ajax({
-                        url: "a-ami-implementation/" + dataId,
-                        type: 'DELETE',
-                        data: {id:dataId},
-                        dataType: 'json'
-                    }).done(function(response) {
-                        Swal.fire({
-                            title: 'Deleted!',
-                            text: 'Your data has been deleted.',
-                            type: 'success',
-                            timer: 2000
-                        })
-                        $('#table_amidocs').DataTable().ajax.reload(null, true);
-                    }).fail(function() {
-                        Swal.fire({
-                            title: 'Oops!',
-                            text: 'Something went wrong with ajax!',
-                            type: 'error',
-                            timer: 2000
-                        })
-                    });
-                });
-            },
-        });
-    });
-
-    $('#choose_role').attr('disabled', 'disabled');
-    $('#choose_faculty').attr('disabled', 'disabled');
-
-    /* Archive */
-    function archiveDoc(id,is_archive){
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "{{ Route('archiveDoc') }}",
-            id: $('.archivedoc'+id+'').val(),
-            data:{'is_archive':is_archive,'id':id},
-        }).done(function(data, response) {
-            $('#table_amidocs').DataTable().ajax.reload(null, true);
-            Swal.fire({
-                title: 'Success!',
-                text: 'Data archived successfully!',
-                type: 'success',
-                customClass: {
-                confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false,
-                timer: 2000
-            })
-        })
-    }
-
-    $('select[name="id_faculty"]').on('change', function() {
-        $('#id_department').empty();
-        var facultyID = $(this).val();
-        if(facultyID) {
-            $.ajax({
-                url: '{{route("list-faculties", ":id")}}'.replace(":id", facultyID),
-                type: "GET",
-                dataType: "json",
-                success:function(data) { 
-                    $('select[name="id_department"]').removeClass('d-none');
-                    $('select[name="id_department"]').append('<option value="">'+ '- Choose department -' +'</option>');
-                    $.each(data, function(key, value) {
-                    $('select[name="id_department"]').append('<option value="'+ key +'">'+ value +'</option>');
-                    });
-                }
-            });
-        }else{
-            $('select[name="id_department"]').removeClass('d-none');
-        }
-    });
 
 </script>
 

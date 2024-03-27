@@ -50,6 +50,7 @@
                                 <tr>
                                   <th>#</th>
                                   <th>Document Name</th>
+                                  <th>State</th>
                                   <th>Actions</th>
                                 </tr>
                               </thead>
@@ -69,21 +70,6 @@
                                     <form id="form-tambah-edit" name="form-tambah-edit" class="form-horizontal">
                                         <div class="row">
                                             <input type="hidden" id="id" name="id">
-                                            <div class="mb-3">
-                                                <label for="fdi_name" class="form-label">Document Name</label>
-                                                <input type="text" class="form-control" id="fdi_name" name="fdi_name" value="" placeholder="e.g SK Auditor" />
-                                                <span class="text-danger" id="fdiNameErrorMsg" style="font-size: 10px;"></span>
-                                            </div>
-
-                                            <div class="mb-3">
-                                                <label for="id_category" class="form-label">Category</label>
-                                                <select class="form-select" id="id_category" name="id_category" aria-label="Default select example" style="cursor:pointer;">
-                                                    <option value="" id="choose_category">- Choose -</option>
-                                                    <option value="1">SK Auditor</option>
-                                                    <option value="2">Form Monitoring</option>
-                                                </select>
-                                                <span class="text-danger" id="idCategoryErrorMsg" style="font-size: 10px;"></span>
-                                            </div>
 
                                             <div class="mb-3">
                                                 <label for="file" class="form-label">Upload Document</label>
@@ -160,6 +146,7 @@
                         }
                     }, 
                     {data: 'doc_name',name: 'doc_name'},
+                    {data: 'state',name: 'state'},
                     {data: 'action',name: 'action'},
                 ]
             });
@@ -183,10 +170,10 @@
     $('body').on('click','.upload', function(){
         var data_id = $(this).data('id');
         var id_docim = $(this).data('data-iddocs');
-        alert(data_id);
         $('#form-tambah-edit').trigger("reset");
         $('#modal-judul').html("Add new data");
         $('#tambah-edit-modal').modal('show');
+        $('#id').val(data_id);
 
     });
 

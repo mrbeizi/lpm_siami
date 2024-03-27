@@ -252,7 +252,7 @@
             $('#id_faculty').val(data.id_faculty);
             $('#id_department').val(data.id_department);
             $('#nidn').val(data.nidn);
-            $('#auditor_name').val(data.auditor_name);
+            $('#auditor_name').val(data.id_employee);
             $('#file').val(data.file);
         })
     });
@@ -298,6 +298,7 @@
     });
 
     $('#choose_periode').attr('disabled', 'disabled');
+    $('#choose_auditor').attr('disabled', 'disabled');
     // $('#choose_faculty').attr('disabled', 'disabled');
     $('#choose_prodi').attr('disabled', 'disabled');
 

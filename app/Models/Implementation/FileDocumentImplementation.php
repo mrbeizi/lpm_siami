@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class FileDocumentImplementation extends Model
 {
-    protected $table = 'file_document_implementation';
+    protected $table = 'file_document_implementations';
     protected $guarded = [];
 }

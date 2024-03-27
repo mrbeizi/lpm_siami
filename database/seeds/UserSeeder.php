@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
-use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
@@ -13,21 +12,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('id_EN');
-
-        for($i = 1; $i <= 5; $i++){
- 
-            // insert data ke table pegawai menggunakan Faker
-            User::insert([
-                'id_employee' => $faker->numberBetween(1,10),
-                'name' => $faker->name,
-                'email' => $faker->email,
-                'password' => bcrypt('123456'),
-                'role_id' => $faker->numberBetween(1,4),
-                'created_at' => $faker->date(now()),
-                'updated_at' => $faker->date(now()),
-          ]);
-
-        }
+        User::create([
+            'id_employee' => 0,
+            'name' => 'Administrator',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('123456'),
+            'role_id' => 1,
+        ]);
     }
 }

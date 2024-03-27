@@ -9,6 +9,8 @@ use App\Models\General\Faculty;
 use App\Models\General\Department;
 use App\Models\General\Employee;
 use App\Models\General\Period;
+use App\Models\Implementation\DocumentImplementation;
+use App\Models\Implementation\FileDocumentImplementation;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -117,7 +119,8 @@ class AuditorController extends Controller
                     'sk_sertifikat_auditor' => $berkas,
                 ]);                 
 
-                User::updateOrCreate(['id' => $request->id],
+                # Create new account as auditor
+                $post = User::updateOrCreate(['id' => $request->id],
                 [
                     'id_employee' => $request->auditor_name,
                     'name' => $empName,
@@ -125,6 +128,21 @@ class AuditorController extends Controller
                     'password' => Hash::make('123456'),
                     'role_id' => 2,
                 ]);
+
+                # Then insert all document implementation according to the id department
+                $docs = DocumentImplementation::select('id','doc_name')->get();
+                foreach($docs as $result){
+                    $blankInsert[] = [
+                        'fdi_name' => $result->doc_name,
+                        'id_document_implementation' => $result->id,
+                        'id_category' => 1,
+                        'id_department' => $request->id_department,
+                        'validate' => 0,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ]; 
+                }
+                $post = FileDocumentImplementation::insert($blankInsert);
 
         return response()->json($post);
     }
