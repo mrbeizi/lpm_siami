@@ -141,7 +141,7 @@
         </a>
     </li>
     <li class="menu-item">
-        <a href="#" class="menu-link">
+        <a href="{{route('data-doc-spmi.index')}}" class="menu-link {{set_active('data-doc-spmi.index')}}">
         <i class="menu-icon tf-icons bx bx-folder-open bx-tada-hover"></i>
         <div data-i18n="Dokumen SPMI">Dokumen SPMI</div>
         </a>

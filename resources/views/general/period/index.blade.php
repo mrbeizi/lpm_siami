@@ -76,7 +76,7 @@
                                             </div> 
 
                                             <label for="is_active" class="form-label">Period State:</label>
-                                            <div class="mb-3">
+                                            <div class="mb-2">
                                                 <label class="switch switch-primary">
                                                     <span class="switch-label">Closed</span>
                                                     <input type="checkbox" class="switch-input" value="1" id="is_active" name="is_active" />
@@ -93,10 +93,29 @@
                                             </div> 
                                             <div class="col-sm-12">
                                                 <div class="divider">
-                                                    <div class="divider-text">Standard's component:</div>
+                                                    <div class="divider-text"><button class="btn btn-secondary btn-xs me-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                        Standard's component:
+                                                      </button></div>
                                                 </div>
-                                                <div class="container p-2">
-                                                    {!! $tree !!}
+                                                <div class="collapse" id="collapseExample">
+                                                    <div class="container p-2">
+                                                        <div class="col-md-6">
+                                                            @if($standards->count() > 0)
+                                                            <ul id="tree1">
+                                                                @foreach($standards as $standard)
+                                                                    <li>
+                                                                        {{ $standard->name }}
+                                                                        @if(count($standard->childs))
+                                                                            @include('general.standard.manageChild',['childs' => $standard->childs])
+                                                                        @endif
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                            @else
+                                                            <p class="text-mute"><i>Nothing standard available, please add new standard!</i></p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             

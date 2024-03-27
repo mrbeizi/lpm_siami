@@ -71,7 +71,7 @@
                                                     @endif
                                                     @endforeach
                                                 </select>
-                                                <span class="text-danger" id="periodeErrorMsg"></span>
+                                                <span class="text-danger" id="idPeriodeErrorMsg"></span>
                                             </div>
 
                                             {{-- <div class="mb-3">
@@ -217,10 +217,10 @@
                         })
                     },
                     error: function(response) {
-                        $('#periodeErrorMsg').text(response.responseJSON.errors.id_periode);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
+                        $('#auditorNameErrorMsg').text(response.responseJSON.errors.auditor_name);
                         $('#idFacultyErrorMsg').text(response.responseJSON.errors.id_faculty);
                         $('#idDepartmentErrorMsg').text(response.responseJSON.errors.id_department);
-                        $('#auditorNameErrorMsg').text(response.responseJSON.errors.auditor_name);
                         $('#fileErrorMsg').text(response.responseJSON.errors.file);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({

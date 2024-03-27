@@ -67,6 +67,7 @@ Route::group(['middleware' => ['auth', 'checkrole:1']], function() {
     Route::post('archived-doc','ImplementationDocs\DocumentController@archiveDoc')->name('archiveDoc');
     Route::resource('ami-implementation','ImplementationDocs\DashboardDocsController');
     Route::get('list-faculties/{id}','ImplementationDocs\DashboardDocsController@faculties')->name('list-faculties');
+    Route::resource('data-doc-spmi','LPM\DocumentSpmiController');
 });
 
 // auditor

@@ -64,9 +64,9 @@ class AuditorController extends Controller
             'file' => 'mimes:pdf|max:2000',
         ],[
             'id_periode.required' => 'Anda belum memilih periode',
-            'auditor_name.required' => 'Anda belum menginputkan nama auditor',
-            'id_faculty.required' => 'Anda belum menginputkan nama fakultas',
-            'id_department.required' => 'Anda belum menginputkan nama prodi',
+            'auditor_name.required' => 'Anda belum memilih nama auditor',
+            'id_faculty.required' => 'Anda belum memilih nama fakultas',
+            'id_department.required' => 'Anda belum memilih nama prodi',
             'file.mimes' => 'Format berkas harus .pdf',
             'file.max' => 'Ukuran file lebih dari 2MB'
         ]);

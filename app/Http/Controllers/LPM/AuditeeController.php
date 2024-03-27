@@ -49,9 +49,9 @@ class AuditeeController extends Controller
             'dekan' => 'required',
         ],[
             'id_periode.required' => 'Anda belum memilih periode',
-            'id_faculty.required' => 'Anda belum menginputkan nama fakultas',
-            'id_department.required' => 'Anda belum menginputkan nama prodi',
-            'dekan.required' => 'Anda belum menginputkan nama dekan',
+            'id_faculty.required' => 'Anda belum memilih nama fakultas',
+            'id_department.required' => 'Anda belum memilih nama prodi',
+            'dekan.required' => 'Anda belum memilih nama dekan',
         ]);
 
         $post = Auditee::updateOrCreate(['id' => $request->id],

@@ -93,18 +93,18 @@
                                                     <option value="{{$auditor->id_employee}}">{{$auditor->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <span class="text-danger" id="auditorNameErrorMsg"></span>
+                                                <span class="text-danger" id="auditorChiefErrorMsg" style="font-size: 10px;"></span>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label for="auditor_member" class="form-label">Auditor Members</label>
                                                 <select class="select2 form-control" id="auditor_member" name="auditor_member" aria-label="Default select example" style="cursor:pointer;">
                                                     <option value="" readonly>- Choose -</option>
-                                                    @foreach($getAuditors as $auditor)
-                                                    <option value="{{$auditor->id_employee}}">{{$auditor->name}}</option>
+                                                    @foreach($getEmployee as $employee)
+                                                    <option value="{{$employee->id_employee}}">{{$employee->name}}</option>
                                                     @endforeach
                                                 </select>
-                                                <span class="text-danger" id="auditorNameErrorMsg"></span>
+                                                <span class="text-danger" id="auditorMemberErrorMsg" style="font-size: 10px;"></span>
                                             </div>
                                             
                                             <div class="col-sm-offset-2 col-sm-12">
@@ -223,8 +223,9 @@
                         })
                     },
                     error: function(response) {
-                        $('#titleErrorMsg').text(response.responseJSON.errors.title);
-                        $('#titleErrorMsg').text(response.responseJSON.errors.is_active);
+                        $('#startDateErrorMsg').text(response.responseJSON.errors.start_date);
+                        $('#auditorChiefErrorMsg').text(response.responseJSON.errors.auditor_chief);
+                        $('#auditorMemberErrorMsg').text(response.responseJSON.errors.auditor_member);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',

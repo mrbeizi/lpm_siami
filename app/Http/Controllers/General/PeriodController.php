@@ -36,19 +36,10 @@ class PeriodController extends Controller
             ->make(true);
         }
 
-        $datas = Standard::leftJoin('standard_periods','standard_periods.id','=','standards.id_standard_period')
-            ->where([['standards.parent_id', '=', 0],['standard_periods.is_active',1]])
-            ->get();
-        $tree='<ul id="browser" class="filetree">';
-        foreach ($datas as $standard) {
-             $tree .='<li class="tree-view closed"<a class="tree-name">'.$standard->name.'</a>';
-             if(count($standard->childs)) {
-                $tree .=$this->childView($standard);
-            }
-        }
-        $tree .='<ul>';
+        $standards = Standard::where([['parent_id', '=', 0]])->get();
+        $allStandards = Standard::select('id','name','parent_id')->get();
 
-        return view('general.period.index', compact('tree'));
+        return view('general.period.index', compact('standards','allStandards'));
     }
 
     public function store(Request $request)
@@ -135,39 +126,5 @@ class PeriodController extends Controller
         }
         $post = Period::updateOrCreate(['id' => $request->id],['is_active' => $req]); 
         return response()->json($post);
-    }
-
-    public function standardTreeView()
-    {
-        $datas = Standard::leftJoin('standard_periods','standard_periods.id','=','standards.id_standard_period')
-            ->where([['standards.parent_id', '=', 0],['standard_periods.is_active',1]])
-            ->get();
-        $tree='<ul id="browser" class="filetree"><li class="tree-view"></li>';
-        foreach ($datas as $standard) {
-             $tree .='<li class="tree-view closed"<a class="tree-name">'.$standard->name.'</a>';
-             if(count($standard->childs)) {
-                $tree .=$this->childView($standard);
-            }
-        }
-        $tree .='<ul>';
-        // return $tree;
-        return view('general.period.index',compact('tree'));
-    }
-
-    public function childView($standard){                 
-        $html ='<ul>';
-        foreach ($standard->childs as $arr) {
-            if(count($arr->childs)){
-                $html .='<li class="tree-view closed"><a class="tree-name">'.$arr->name.'</a>';                  
-                $html .= $this->childView($arr);
-                }else{
-                    $html .='<li class="tree-view"><a class="tree-name">'.$arr->name.'</a>';                                 
-                    $html .="</li>";
-                }
-                               
-        }
-        
-        $html .="</ul>";
-        return $html;
-    }    
+    } 
 }

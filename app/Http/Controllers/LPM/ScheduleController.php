@@ -58,8 +58,12 @@ class ScheduleController extends Controller
     {
         $request->validate([
             'start_date' => 'required',
+            'auditor_chief' => 'required',
+            'auditor_member' => 'required',
         ],[
             'start_date.required' => 'Anda belum memilih tanggal mulai',
+            'auditor_chief.required' => 'Anda belum memilih ketua auditor',
+            'auditor_member.required' => 'Anda belum memilih anggota auditor',
         ]);
 
         $post = Schedule::updateOrCreate(['id' => $request->id],

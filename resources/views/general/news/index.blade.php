@@ -59,7 +59,7 @@
                                             <div class="mb-3">
                                                 <label for="title" class="form-label">Title</label>
                                                 <input type="text" class="form-control" id="title" name="title" value="" placeholder="Type here to input title" />
-                                                <span class="text-danger" id="facultyNameErrorMsg" style="font-size: 10px;"></span>
+                                                <span class="text-danger" id="titleErrorMsg" style="font-size: 10px;"></span>
                                             </div>
 
                                             <div class="col-sm-12">
@@ -86,7 +86,7 @@
                                                     <input type="text" class="form-control" id="attachment" name="attachment" value="" placeholder="e.g https://uvers.ac.id/" />
                                                     <div id="defaultFormControlHelp" class="form-text">*link berita web LPM UVERS</div>
                                                 </div>
-                                                <span class="text-danger" id="fileErrorMsg" style="font-size: 10px;"></span>
+                                                <span class="text-danger" id="attachmentErrorMsg" style="font-size: 10px;"></span>
                                             </div>
 
                                             <div class="col-sm-12">
@@ -97,7 +97,7 @@
                                                             <option value="" id="choose_periode">- Choose -</option>
                                                             <option value="1">2024</option>
                                                         </select>
-                                                        <span class="text-danger" id="periodeErrorMsg" style="font-size: 10px;"></span>
+                                                        <span class="text-danger" id="idPeriodeErrorMsg" style="font-size: 10px;"></span>
                                                     </div>
                                                     <div class="col-sm-2">
                                                         <label>Role:</label>
@@ -209,7 +209,10 @@
                         })
                     },
                     error: function(response) {
-                        $('#roleNameErrorMsg').text(response.responseJSON.errors.role_name);
+                        $('#titleErrorMsg').text(response.responseJSON.errors.title);
+                        $('#publishDateErrorMsg').text(response.responseJSON.errors.publish_date);
+                        $('#endDateErrorMsg').text(response.responseJSON.errors.end_date);
+                        $('#idPeriodeErrorMsg').text(response.responseJSON.errors.id_periode);
                         $('#tombol-simpan').html('Save');
                         Swal.fire({
                             title: 'Error!',
